@@ -1,0 +1,11 @@
+--- cdrtools-3.02/mkisofs/joliet.c	Thu Dec 31 02:04:32 2015
++++ joliet.c	Fri Jun  1 15:26:08 2018
+@@ -278,7 +278,7 @@
+ 		 * Let all valid unicode characters pass
+ 		 * through (according to charset). Others are set to '_' .
+ 		 */
+-		if (j < jsize)
++		if (j < jsize || source != NULL)
+ 			uc = tmpbuf[j];		/* temporary copy */
+ 		else
+ 			uc = '\0';
