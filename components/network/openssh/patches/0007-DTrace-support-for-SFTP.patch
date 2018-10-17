@@ -100,6 +100,17 @@ index 3619cdfc..78167f9d 100644
  
  /* Our verbosity */
  static LogLevel log_level = SYSLOG_LEVEL_ERROR;
+@@ -694,8 +691,8 @@ process_open(u_int32_t id)
+	logit("open \"%s\" flags %s mode 0%o",
+	    name, string_from_portable(pflags), mode);
+	if (readonly &&
+-	    ((flags & O_ACCMODE) == O_WRONLY ||
+-	    (flags & O_ACCMODE) == O_RDWR)) {
++	    ((flags & O_ACCMODE) != O_RDONLY ||
++	    (flags & (O_CREAT|O_TRUNC)) != 0)) {
+		verbose("Refusing open request in read-only mode");
+		status = SSH2_FX_PERMISSION_DENIED;
+	} else {
 @@ -736,14 +739,17 @@ process_read(u_int32_t id)
  	u_int32_t len;
  	int r, handle, fd, ret, status = SSH2_FX_FAILURE;
