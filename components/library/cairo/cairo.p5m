@@ -22,7 +22,7 @@ set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
 
 license $(COMPONENT_LICENSE_FILE) license='$(COMPONENT_LICENSE)'
 
-depend fmri=service/opengl/ogl-select type=require
+#depend fmri=service/opengl/ogl-select type=require
 
 <transform file -> add pkg.depend.bypass-generate libGL\.so\.1>
 <transform file -> add pkg.depend.bypass-generate libEGL\.so\.1>

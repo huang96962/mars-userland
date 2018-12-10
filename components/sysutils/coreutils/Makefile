@@ -71,6 +71,7 @@ CONFIGURE_ENV		+=	gl_cv_host_operating_system=illumos
 COMPONENT_POST_INSTALL_ACTION += ( cp $(COMPONENT_DIR)/files/*.1 \
                                       $(PROTOGNUSHAREMAN1) ) 
 
+export FORCE_UNSAFE_CONFIGURE=1
 # Build 32-bit for libstdbuf only, then overwrite with 64bit binaries
 build:		$(BUILD_32_and_64)
 
