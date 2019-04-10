@@ -36,18 +36,18 @@ file path=usr/bin/$(MACH64)/munch
 file path=usr/bin/$(MACH64)/unmunch
 file path=usr/bin/$(MACH64)/wordforms
 file path=usr/bin/$(MACH64)/wordlist2hunspell
-file path=usr/bin/affixcompress
-file path=usr/bin/analyze
-file path=usr/bin/chmorph
-file path=usr/bin/hunspell
-file path=usr/bin/hunzip
-file path=usr/bin/hzip
-file path=usr/bin/ispellaff2myspell
-file path=usr/bin/makealias
-file path=usr/bin/munch
-file path=usr/bin/unmunch
-file path=usr/bin/wordforms
-file path=usr/bin/wordlist2hunspell
+link path=usr/bin/affixcompress target=$(MACH64)/affixcompress
+link path=usr/bin/analyze target=$(MACH64)/analyze
+link path=usr/bin/chmorph target=$(MACH64)/chmorph
+link path=usr/bin/hunspell target=$(MACH64)/hunspell
+link path=usr/bin/hunzip target=$(MACH64)/hunzip
+link path=usr/bin/hzip target=$(MACH64)/hzip
+link path=usr/bin/ispellaff2myspell target=$(MACH64)/ispellaff2myspell
+link path=usr/bin/makealias target=$(MACH64)/makealias
+link path=usr/bin/munch target=$(MACH64)/munch
+link path=usr/bin/unmunch target=$(MACH64)/unmunch
+link path=usr/bin/wordforms target=$(MACH64)/wordforms
+link path=usr/bin/wordlist2hunspell target=$(MACH64)/wordlist2hunspell
 file path=usr/include/hunspell/atypes.hxx
 file path=usr/include/hunspell/csutil.hxx
 file path=usr/include/hunspell/htypes.hxx

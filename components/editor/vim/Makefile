@@ -69,7 +69,7 @@ CONFIGURE_OPTIONS +=	--with-features=huge
 CONFIGURE_OPTIONS +=	--with-compiledby="oi-userland build environment"
 CONFIGURE_OPTIONS +=	--with-modified-by="OpenIndiana <oi-dev@openindiana.org>"
 CONFIGURE_OPTIONS +=	--enable-luainterp=dynamic
-CONFIGURE_OPTIONS +=	--enable-perlinterp=dynamic
+#CONFIGURE_OPTIONS +=	--enable-perlinterp=dynamic
 CONFIGURE_OPTIONS +=	--enable-pythoninterp=dynamic
 CONFIGURE_OPTIONS +=	--enable-rubyinterp=dynamic
 CONFIGURE_OPTIONS +=	--enable-terminal
@@ -113,7 +113,7 @@ REQUIRED_PACKAGES += library/desktop/gtk2
 REQUIRED_PACKAGES += library/desktop/pango
 REQUIRED_PACKAGES += library/glib2
 REQUIRED_PACKAGES += library/ncurses
-REQUIRED_PACKAGES += runtime/perl-522
+REQUIRED_PACKAGES += runtime/perl-524
 REQUIRED_PACKAGES += SUNWcs
 REQUIRED_PACKAGES += system/library
 REQUIRED_PACKAGES += system/library/math

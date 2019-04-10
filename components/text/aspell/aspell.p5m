@@ -32,15 +32,15 @@ file path=usr/bin/$(MACH64)/prezip-bin
 file path=usr/bin/$(MACH64)/pspell-config
 file path=usr/bin/$(MACH64)/run-with-aspell
 file path=usr/bin/$(MACH64)/word-list-compress
-file path=usr/bin/aspell
-file path=usr/bin/aspell-import
-file path=usr/bin/precat
-file path=usr/bin/preunzip
-file path=usr/bin/prezip
-file path=usr/bin/prezip-bin
-file path=usr/bin/pspell-config
-file path=usr/bin/run-with-aspell
-file path=usr/bin/word-list-compress
+link path=usr/bin/aspell target=$(MACH64)/aspell
+link path=usr/bin/aspell-import target=$(MACH64)/aspell-import
+link path=usr/bin/precat target=$(MACH64)/precat
+link path=usr/bin/preunzip target=$(MACH64)/preunzip
+link path=usr/bin/prezip target=$(MACH64)/prezip
+link path=usr/bin/prezip-bin target=$(MACH64)/prezip-bin
+link path=usr/bin/pspell-config target=$(MACH64)/pspell-config
+link path=usr/bin/run-with-aspell target=$(MACH64)/run-with-aspell
+link path=usr/bin/word-list-compress target=$(MACH64)/word-list-compress
 file path=usr/include/aspell.h
 file path=usr/include/pspell/pspell.h
 file path=usr/lib/$(MACH64)/aspell-0.60/ccpp.amf
