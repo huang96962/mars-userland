@@ -97,6 +97,7 @@ file path=opt/VirtualBox/$(MACH64)/components/VBoxXPCOMBase.xpt
 file path=opt/VirtualBox/$(MACH64)/components/VBoxXPCOMIPCC.so
 file path=opt/VirtualBox/$(MACH64)/components/VirtualBox_XPCOM.xpt
 file path=opt/VirtualBox/$(MACH64)/libvboxjxpcom.so
+file path=opt/VirtualBox/$(MACH64)/vboxwebsrv mode=0555
 #link path=opt/VirtualBox/$(MACH64)/rdesktop-vrdp-keymaps \
 #    target=../rdesktop-vrdp-keymaps/
 file path=opt/VirtualBox/LICENSE
@@ -131,6 +132,7 @@ file path=opt/VirtualBox/pkginstall.sh mode=0555
 file path=opt/VirtualBox/sdk/bindings/xpcom/java/vboxjxpcom.jar
 file path=opt/VirtualBox/smf-vboxautostart.sh mode=0555
 file path=opt/VirtualBox/smf-vboxballoonctrl.sh mode=0555
+file path=opt/VirtualBox/smf-vboxwebsrv.sh mode=0555
 file path=opt/VirtualBox/vboxconfig.sh mode=0555
 file path=platform/i86pc/kernel/drv/$(MACH64)/vboxdrv
 file path=platform/i86pc/kernel/drv/$(MACH64)/vboxflt
@@ -239,6 +241,7 @@ file path=usr/share/pixmaps/virtualbox.png
 file path=var/svc/manifest/application/virtualbox/virtualbox-autostart.xml
 file path=var/svc/manifest/application/virtualbox/virtualbox-balloonctrl.xml
 file path=var/svc/manifest/application/virtualbox/virtualbox-zoneaccess.xml
+file path=var/svc/manifest/application/virtualbox/virtualbox-webservice.xml
 #file path=vbox.pkginfo
 #file path=vbox.space
 
