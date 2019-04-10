@@ -1,5 +1,5 @@
---- nginx-1.11.6/conf/nginx.conf.~1~	2016-11-15 18:11:46.000000000 +0300
-+++ nginx-1.11.6/conf/nginx.conf	2016-12-08 21:06:07.786872721 +0300
+--- nginx-1.14.0/conf/nginx.conf.~1~	2018-04-17 23:22:36.000000000 +0000
++++ nginx-1.14.0/conf/nginx.conf	2019-02-22 03:29:59.137923022 +0000
 @@ -1,10 +1,10 @@
  
 -#user  nobody;
@@ -15,7 +15,7 @@
  
  #pid        logs/nginx.pid;
  
-@@ -22,7 +22,7 @@
+@@ -22,7 +22,7 @@ http {
      #                  '$status $body_bytes_sent "$http_referer" '
      #                  '"$http_user_agent" "$http_x_forwarded_for"';
  
@@ -24,7 +24,13 @@
  
      sendfile        on;
      #tcp_nopush     on;
-@@ -38,10 +38,10 @@
+@@ -33,15 +33,15 @@ http {
+     #gzip  on;
+ 
+     server {
+-        listen       80;
++        listen       2048;
+         server_name  localhost;
  
          #charset koi8-r;
  
@@ -37,7 +43,7 @@
              index  index.html index.htm;
          }
  
-@@ -51,7 +51,7 @@
+@@ -51,7 +51,7 @@ http {
          #
          error_page   500 502 503 504  /50x.html;
          location = /50x.html {
@@ -46,7 +52,7 @@
          }
  
          # proxy the PHP scripts to Apache listening on 127.0.0.1:80
-@@ -63,7 +63,7 @@
+@@ -63,7 +63,7 @@ http {
          # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
          #
          #location ~ \.php$ {
@@ -55,7 +61,7 @@
          #    fastcgi_pass   127.0.0.1:9000;
          #    fastcgi_index  index.php;
          #    fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;
-@@ -87,7 +87,7 @@
+@@ -87,7 +87,7 @@ http {
      #    server_name  somename  alias  another.alias;
  
      #    location / {
@@ -64,7 +70,7 @@
      #        index  index.html index.htm;
      #    }
      #}
-@@ -109,7 +109,7 @@
+@@ -109,7 +109,7 @@ http {
      #    ssl_prefer_server_ciphers  on;
  
      #    location / {
