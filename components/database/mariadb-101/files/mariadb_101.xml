@@ -87,7 +87,7 @@
                            value='solaris.smf.value.mariadb/version_101' /> 
                         <propval name='action_authorization' type='astring'
                            value='solaris.smf.manage.mariadb/version_101' />
-			<propval name='enable_64bit' type='boolean' value='false' />
+			<propval name='enable_64bit' type='boolean' value='true' />
         	</property_group>
 
                 <property_group name='general' type='framework'>
