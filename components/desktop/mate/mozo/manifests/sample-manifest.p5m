@@ -10,7 +10,7 @@
 #
 
 #
-# Copyright 2017 <contributor>
+# Copyright 2018 <contributor>
 #
 
 set name=pkg.fmri value=pkg:/$(COMPONENT_FMRI)@$(IPS_COMPONENT_VERSION),$(BUILD_VERSION)
@@ -23,11 +23,11 @@ set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
 license $(COMPONENT_LICENSE_FILE) license='$(COMPONENT_LICENSE)'
 
 file path=usr/bin/mozo
-file path=usr/lib/python2.7/vendor-packages/Mozo/MainWindow.py
-file path=usr/lib/python2.7/vendor-packages/Mozo/MenuEditor.py
-file path=usr/lib/python2.7/vendor-packages/Mozo/__init__.py
-file path=usr/lib/python2.7/vendor-packages/Mozo/config.py
-file path=usr/lib/python2.7/vendor-packages/Mozo/util.py
+file path=usr/lib/python3.5/vendor-packages/Mozo/MainWindow.py
+file path=usr/lib/python3.5/vendor-packages/Mozo/MenuEditor.py
+file path=usr/lib/python3.5/vendor-packages/Mozo/__init__.py
+file path=usr/lib/python3.5/vendor-packages/Mozo/config.py
+file path=usr/lib/python3.5/vendor-packages/Mozo/util.py
 file path=usr/share/applications/mozo.desktop
 file path=usr/share/icons/hicolor/16x16/apps/mozo.png
 file path=usr/share/icons/hicolor/22x22/apps/mozo.png
@@ -80,6 +80,7 @@ file path=usr/share/locale/frp/LC_MESSAGES/mozo.mo
 file path=usr/share/locale/fur/LC_MESSAGES/mozo.mo
 file path=usr/share/locale/fy/LC_MESSAGES/mozo.mo
 file path=usr/share/locale/ga/LC_MESSAGES/mozo.mo
+file path=usr/share/locale/gd/LC_MESSAGES/mozo.mo
 file path=usr/share/locale/gl/LC_MESSAGES/mozo.mo
 file path=usr/share/locale/gu/LC_MESSAGES/mozo.mo
 file path=usr/share/locale/ha/LC_MESSAGES/mozo.mo
@@ -95,12 +96,14 @@ file path=usr/share/locale/is/LC_MESSAGES/mozo.mo
 file path=usr/share/locale/it/LC_MESSAGES/mozo.mo
 file path=usr/share/locale/ja/LC_MESSAGES/mozo.mo
 file path=usr/share/locale/ka/LC_MESSAGES/mozo.mo
+file path=usr/share/locale/kab/LC_MESSAGES/mozo.mo
 file path=usr/share/locale/kk/LC_MESSAGES/mozo.mo
 file path=usr/share/locale/kn/LC_MESSAGES/mozo.mo
 file path=usr/share/locale/ko/LC_MESSAGES/mozo.mo
 file path=usr/share/locale/ku/LC_MESSAGES/mozo.mo
 file path=usr/share/locale/ku_IQ/LC_MESSAGES/mozo.mo
 file path=usr/share/locale/ky/LC_MESSAGES/mozo.mo
+file path=usr/share/locale/la/LC_MESSAGES/mozo.mo
 file path=usr/share/locale/li/LC_MESSAGES/mozo.mo
 file path=usr/share/locale/lt/LC_MESSAGES/mozo.mo
 file path=usr/share/locale/lv/LC_MESSAGES/mozo.mo

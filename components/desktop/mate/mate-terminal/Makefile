@@ -10,15 +10,15 @@
 
 #
 # Copyright 2016 Alexander Pyhalov
-# Copyright 2018 Michal Nowak
+# Copyright 2019 Michal Nowak
 #
 
-PREFERRED_BITS= 64
+PREFERRED_BITS=		64
 
 include ../../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		mate-terminal
-COMPONENT_MJR_VERSION=	1.20
+COMPONENT_MJR_VERSION=	1.22
 COMPONENT_MNR_VERSION=	1
 COMPONENT_VERSION=      $(COMPONENT_MJR_VERSION).$(COMPONENT_MNR_VERSION)
 COMPONENT_PROJECT_URL=  http://www.mate-desktop.org
@@ -26,7 +26,7 @@ COMPONENT_SUMMARY=      MATE terminal emulator
 COMPONENT_SRC=          $(COMPONENT_NAME)-$(COMPONENT_VERSION)
 COMPONENT_ARCHIVE=      $(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH= \
-    sha256:27a97914d92f5cc1b0744fe10c60d0484d7eeb699bc5dafe2fc3f75b4f41d979
+	sha256:b68620d9957adadb78ed977480832e16c80b21cb5db58bffd33b665a7c064120
 COMPONENT_ARCHIVE_URL=  http://pub.mate-desktop.org/releases/$(COMPONENT_MJR_VERSION)/$(COMPONENT_ARCHIVE)
 COMPONENT_LICENSE= GPLv3
 COMPONENT_LICENSE_FILE= COPYING
@@ -55,13 +55,13 @@ CONFIGURE_OPTIONS+=	--localstatedir=/var/lib
 
 COMPONENT_INSTALL_ENV += GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1
 
-# common targets
 build:		$(BUILD_64)
 
 install:	$(INSTALL_64)
 
 test:		$(NO_TESTS)
 
+# Auto-generated dependencies
 REQUIRED_PACKAGES += gnome/config/dconf
 REQUIRED_PACKAGES += library/desktop/atk
 REQUIRED_PACKAGES += library/desktop/cairo

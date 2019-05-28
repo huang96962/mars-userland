@@ -11,25 +11,25 @@
 
 #
 # Copyright 2017 Alexander Pyhalov
-# Copyright 2018 Michal Nowak
+# Copyright 2019 Michal Nowak
 #
 
 include ../../../make-rules/shared-macros.mk
 
-COMPONENT_NAME= gtk+
-COMPONENT_VERSION= 3.24.1
-COMPONENT_SUMMARY= GTK+ - GIMP Toolkit Library for creation of graphical user interfaces
-COMPONENT_SRC= $(COMPONENT_NAME)-$(COMPONENT_VERSION)
-COMPONENT_ARCHIVE= $(COMPONENT_SRC).tar.xz
+COMPONENT_NAME=		gtk+
+COMPONENT_VERSION=	3.24.8
+COMPONENT_SUMMARY=	GTK+ - GIMP Toolkit Library for creation of graphical user interfaces
+COMPONENT_SRC=		$(COMPONENT_NAME)-$(COMPONENT_VERSION)
+COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH= \
-  sha256:68387be307b99aadcdc653561d7a2a7f0113b93561fb18ded7075ec9ced5b02f
+	sha256:666962de9b9768fe9ca785b0e2f42c8b9db3868a12fa9b356b167238d70ac799
 COMPONENT_ARCHIVE_URL= \
-  http://ftp.gnome.org/pub/GNOME/sources/$(COMPONENT_NAME)/3.24/$(COMPONENT_ARCHIVE)
-COMPONENT_PROJECT_URL = https://www.gtk.org/
-COMPONENT_LICENSE= LGPLv2
-COMPONENT_LICENSE_FILE= COPYING
-COMPONENT_CLASSIFICATION = Desktop (GNOME)/Libraries
-COMPONENT_FMRI = library/desktop/gtk3
+	http://ftp.gnome.org/pub/GNOME/sources/$(COMPONENT_NAME)/3.24/$(COMPONENT_ARCHIVE)
+COMPONENT_PROJECT_URL=	https://www.gtk.org/
+COMPONENT_LICENSE=	LGPLv2
+COMPONENT_LICENSE_FILE=	COPYING
+COMPONENT_CLASSIFICATION=	Desktop (GNOME)/Libraries
+COMPONENT_FMRI=		library/desktop/gtk3
 
 include $(WS_MAKE_RULES)/prep.mk
 include $(WS_MAKE_RULES)/configure.mk
@@ -46,14 +46,15 @@ LD_Z_IGNORE=
 # Uses isinf, etc. only available in c99 and newer
 CFLAGS.gcc += -std=gnu11
 
-COMPONENT_PREP_ACTION =	(cd $(@D) && libtoolize --force &&\
-                                        aclocal -I ./m4 &&\
-					gtkdocize &&\
-                                        autoheader &&\
-                                        automake -a -f -c --gnu &&\
-                                        autoconf )
+COMPONENT_PREP_ACTION =	(cd $(@D) && \
+				libtoolize --force && \
+				aclocal -I ./m4 && \
+				gtkdocize && \
+				autoheader && \
+				automake -a -f -c --gnu && \
+				autoconf )
 
-COMPONENT_PRE_CONFIGURE_ACTION =	($(CLONEY) $(SOURCE_DIR) $(@D))
+COMPONENT_PRE_CONFIGURE_ACTION =	( $(CLONEY) $(SOURCE_DIR) $(@D) )
 
 CONFIGURE_SCRIPT = $(@D)/configure
 
@@ -85,7 +86,7 @@ install: $(INSTALL_32_and_64)
 test: $(TEST_32_and_64)
 
 # Test dependencies
-REQUIRED_PACKAGES += hicolor-icon-theme
+REQUIRED_PACKAGES += gnome/theme/hicolor-icon-theme
 
 # Build dependencies
 REQUIRED_PACKAGES += developer/documentation-tool/gtk-doc
@@ -101,6 +102,7 @@ REQUIRED_PACKAGES += library/desktop/gtk3
 REQUIRED_PACKAGES += library/desktop/json-glib
 REQUIRED_PACKAGES += library/desktop/librest
 REQUIRED_PACKAGES += library/desktop/pango
+REQUIRED_PACKAGES += library/fribidi
 REQUIRED_PACKAGES += library/glib2
 REQUIRED_PACKAGES += library/libsoup
 REQUIRED_PACKAGES += library/libxml2

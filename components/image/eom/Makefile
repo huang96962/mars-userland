@@ -10,13 +10,13 @@
 
 #
 # Copyright 2017 Alexander Pyhalov
-# Copyright 2018 Michal Nowak
+# Copyright 2019 Michal Nowak
 #
 
 include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		eom
-COMPONENT_MJR_VERSION=	1.20
+COMPONENT_MJR_VERSION=	1.22
 COMPONENT_MNR_VERSION=	1
 COMPONENT_VERSION=	$(COMPONENT_MJR_VERSION).$(COMPONENT_MNR_VERSION)
 COMPONENT_PROJECT_URL=  http://www.mate-desktop.org
@@ -24,12 +24,12 @@ COMPONENT_SUMMARY=      MATE image viewer
 COMPONENT_SRC=          $(COMPONENT_NAME)-$(COMPONENT_VERSION)
 COMPONENT_ARCHIVE=      $(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH= \
-    sha256:35375d5d55128e03c9a4f9e5559878873275c6e182b159058767180ca449347d
+	sha256:64d73069ba4db8515a6c2c90fadba87e1c5cac67dd1e102b271f62e537ee970e
 COMPONENT_ARCHIVE_URL=  http://pub.mate-desktop.org/releases/$(COMPONENT_MJR_VERSION)/$(COMPONENT_ARCHIVE)
-COMPONENT_LICENSE= GPLv2
-COMPONENT_LICENSE_FILE= COPYING
-COMPONENT_CLASSIFICATION = Applications/Graphics and Imaging
-COMPONENT_FMRI = image/viewer/eom
+COMPONENT_LICENSE=	GPLv2
+COMPONENT_LICENSE_FILE=	COPYING
+COMPONENT_CLASSIFICATION= Applications/Graphics and Imaging
+COMPONENT_FMRI=		image/viewer/eom
 
 include $(WS_MAKE_RULES)/prep.mk
 include $(WS_MAKE_RULES)/configure.mk
@@ -60,13 +60,13 @@ COMPONENT_BUILD_ENV += CC="$(CC)"
 
 COMPONENT_INSTALL_ENV+=	GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1
 
-# common targets
 build:		$(BUILD_64)
 
 install:	$(INSTALL_64)
 
 test:		$(NO_TESTS)
 
+# Auto-generated dependencies
 REQUIRED_PACKAGES += image/library/libexif
 REQUIRED_PACKAGES += image/library/libjpeg8-turbo
 REQUIRED_PACKAGES += image/library/librsvg

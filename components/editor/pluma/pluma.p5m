@@ -11,7 +11,7 @@
 
 #
 # Copyright 2017 Alexander Pyhalov
-# Copyright 2018 Michal Nowak
+# Copyright 2019 Michal Nowak
 #
 
 set name=pkg.fmri value=pkg:/$(COMPONENT_FMRI)@$(IPS_COMPONENT_VERSION),$(BUILD_VERSION)
@@ -130,7 +130,6 @@ file path=usr/lib/$(MACH64)/pluma/plugins/taglist.plugin
 file path=usr/lib/$(MACH64)/pluma/plugins/time.plugin
 file path=usr/lib/$(MACH64)/pluma/plugins/trailsave.plugin
 file path=usr/lib/$(MACH64)/pluma/pluma-bugreport.sh
-file path=usr/share/appdata/pluma.appdata.xml
 file path=usr/share/applications/pluma.desktop
 file path=usr/share/gir-1.0/Pluma-1.0.gir
 file path=usr/share/glib-2.0/schemas/org.mate.pluma.gschema.xml
@@ -177,6 +176,7 @@ file path=usr/share/locale/fa/LC_MESSAGES/pluma.mo
 file path=usr/share/locale/fi/LC_MESSAGES/pluma.mo
 file path=usr/share/locale/fr/LC_MESSAGES/pluma.mo
 file path=usr/share/locale/fr_CA/LC_MESSAGES/pluma.mo
+file path=usr/share/locale/frp/LC_MESSAGES/pluma.mo
 file path=usr/share/locale/fur/LC_MESSAGES/pluma.mo
 file path=usr/share/locale/fy/LC_MESSAGES/pluma.mo
 file path=usr/share/locale/ga/LC_MESSAGES/pluma.mo
@@ -259,6 +259,7 @@ file path=usr/share/locale/zh_HK/LC_MESSAGES/pluma.mo
 file path=usr/share/locale/zh_TW/LC_MESSAGES/pluma.mo
 file path=usr/share/locale/zu/LC_MESSAGES/pluma.mo
 file path=usr/share/man/man1/pluma.1
+file path=usr/share/metainfo/pluma.appdata.xml
 file path=usr/share/pluma/icons/pluma-plugin.png
 file path=usr/share/pluma/plugins/docinfo/docinfo.ui
 file path=usr/share/pluma/plugins/externaltools/tools/build
@@ -307,6 +308,7 @@ file path=usr/share/pluma/plugins/taglist/XSLT.tags.gz
 file path=usr/share/pluma/plugins/taglist/XUL.tags.gz
 file path=usr/share/pluma/plugins/time/pluma-time-dialog.ui
 file path=usr/share/pluma/plugins/time/pluma-time-setup-dialog.ui
+file path=usr/share/pluma/pluma.about
 file path=usr/share/pluma/ui/pluma-encodings-dialog.ui
 file path=usr/share/pluma/ui/pluma-preferences-dialog.ui
 file path=usr/share/pluma/ui/pluma-print-preferences.ui

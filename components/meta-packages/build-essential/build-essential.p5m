@@ -83,7 +83,6 @@ depend fmri=library/readline type=require
 depend fmri=library/zlib type=require
 depend fmri=library/neon type=require
 depend fmri=library/libxslt type=require
-depend fmri=developer/library/lint type=require
 
 # Misc useful
 depend fmri=compress/gzip type=require
@@ -91,6 +90,7 @@ depend fmri=archiver/gnu-tar type=require
 depend fmri=compress/p7zip type=require
 depend fmri=compress/unzip type=require
 depend fmri=compress/xz type=require
+depend fmri=compress/zstd type=require
 depend fmri=compress/bzip2 type=require
 depend fmri=archiver/cabextract type=require
 depend fmri=developer/gaa type=require
@@ -114,6 +114,7 @@ depend fmri=developer/astdev type=require
 depend fmri=developer/illumos-gcc type=require
 depend fmri=developer/opensolaris/osnet type=require
 depend fmri=library/glib2 type=require
+depend fmri=library/idnkit/header-idnkit type=require
 depend fmri=library/libxml2 type=require
 depend fmri=library/nspr/header-nspr type=require
 depend fmri=library/perl-5/xml-parser type=require

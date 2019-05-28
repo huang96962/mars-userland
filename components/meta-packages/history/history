@@ -475,6 +475,7 @@ database/mariadb-55@5.5.55,5.11-2017.0.0.3
 database/mariadb-55/client@5.5.55,5.11-2017.0.0.3
 database/mariadb-55/library@5.5.55,5.11-2017.0.0.3
 database/mariadb-55/tests@5.5.55,5.11-2017.0.0.3
+database/mongodb-33@3.3.12-2018.0.0.4
 database/mysql-5/connector/jdbc@5.1.5,5.11-0.134
 database/mysql-5/tests@5.0.86,5.11-0.134
 database/mysql-50/connector/jdbc@5.1.5,5.11-2015.0.2.0
@@ -528,8 +529,10 @@ desktop/administration/gnome-system-tools@2.30.0,5.11-2017.0.0.1
 desktop/administration/system-tools-backends@1.4.2,5.11-2017.0.0.3
 desktop/archive-manager/file-roller@2.32.2,5.11-2017.0.0.3
 desktop/avant-window-navigator@0.3.2.1,5.11-2017.0.0.3
+desktop/calculator/gcalctool@5.30.2-2018.0.0.1
 desktop/compiz/library/compizconfig-gconf@0.8.8,5.11-2018.0.0.2
 desktop/compiz/library/g++/libcompizconfig@0.8.8,5.11-2014.0.1.0 desktop/compiz/library/libcompizconfig@0.8.8,5.11-2014.1.3.0 noincorporate
+desktop/mate/mate-icon-theme-faenza@1.20.0-2018.0.0.0
 desktop/media-player/moovida/moovida-plugins@0.5.11,5.11-2015.0.2.0
 desktop/media-player/moovida@0.5.11,5.11-2015.0.2.0
 desktop/media-player/songbird@0.5.11,5.11-2014.0.0.0
@@ -576,6 +579,7 @@ editor/gedit@2.30.4,5.11-2018.0.0.3
 editor/gedit/gedit-plugins@2.32.0,5.11-2017.0.0.2
 editor/ghex@2.30.0,5.11-2014.0.0.0
 editor/gobby@0.4.94,5.11-2017.0.0.3
+file/rename@2.33.1-2018.0.0.1 text/text-utilities
 file/slocate@0.5.11,5.11-2015.0.2.0 file/mlocate@0.25-0.151.1.8.1
 games/gnome-games@2.32.1,5.11-2017.0.0.2
 gnome/accessibility/accerciser@2.30.1,5.11-2016.0.0.0
@@ -961,6 +965,7 @@ runtime/tcl-8/snack@2.2.10,5.11-2017.0.0.0
 security/openscap-perl-512@0.8.1,5.11-2014.0.0.0
 security/openscap-python-26@0.8.1,5.11-2014.0.0.0
 security/openscap@0.8.1,5.11-2014.0.0.0
+service/database/mongodb-33@3.3.12-2018.0.0.4
 service/database/postgres-82@8.2.17,5.11-2015.0.2.0
 service/database/postgres-83@8.3.11,5.11-2015.0.2.0
 service/database/postgres-84/language-bindings@8.4.18,5.11-2015.0.2.0
@@ -1107,6 +1112,7 @@ system/management/visual-panels/panel-time@0.5.11,5.11-2015.0.2.0
 system/management/visual-panels/panel-usermgr@0.5.11,5.11-2015.0.2.0
 system/management/visual-panels@0.5.11,5.11-2015.0.2.0
 system/management/wbem/resource-management@0.5.11,5.11-2015.0.2.0
+system/management/web/openwsman@2.1.0-2018.0.0.0
 system/management/webmin@1.510,5.11-2014.0.1.0
 system/network/routing/quagga@0.99.8,5.11-2018.0.0.0
 system/storage/smartmontools@6.5,5.11-2016.0.1.1 storage/smartmontools@6.5,5.11-2016.0.1.0
@@ -1254,6 +1260,54 @@ web/php-55/php-cli@5.5.38,5.11-2016.0.0.1
 web/php-55/php-common@5.5.38,5.11-2016.0.0.1
 web/php-55/php-fpm@5.5.38,5.11-2016.0.0.1
 web/php-55/php-pear@5.5.38,5.11-2016.0.0.1
+web/php-56@5.6.35,5.11-2018.0.0.1
+web/php-56/extension/php-bcmath@5.6.35,5.11-2018.0.0.1
+web/php-56/extension/php-bz2@5.6.35,5.11-2018.0.0.1
+web/php-56/extension/php-calendar@5.6.35,5.11-2018.0.0.1
+web/php-56/extension/php-ctype@5.6.35,5.11-2018.0.0.1
+web/php-56/extension/php-curl@5.6.35,5.11-2018.0.0.1
+web/php-56/extension/php-dom@5.6.35,5.11-2018.0.0.1
+web/php-56/extension/php-exif@5.6.35,5.11-2018.0.0.1
+web/php-56/extension/php-ftp@5.6.35,5.11-2018.0.0.1
+web/php-56/extension/php-gd@5.6.35,5.11-2018.0.0.1
+web/php-56/extension/php-gettext@5.6.35,5.11-2018.0.0.1
+web/php-56/extension/php-iconv@5.6.35,5.11-2018.0.0.1
+web/php-56/extension/php-idn@1.2.3,5.11-2018.0.0.1
+web/php-56/extension/php-imap@5.6.35,5.11-2018.0.0.1
+web/php-56/extension/php-intl@5.6.35,5.11-2018.0.0.1
+web/php-56/extension/php-json@5.6.35,5.11-2018.0.0.1
+web/php-56/extension/php-ldap@5.6.35,5.11-2018.0.0.1
+web/php-56/extension/php-mbstring@5.6.35,5.11-2018.0.0.1
+web/php-56/extension/php-mcrypt@5.6.35,5.11-2018.0.0.1
+web/php-56/extension/php-memcache@2.2.7,5.11-2018.0.0.1
+web/php-56/extension/php-memcached@2.2.0,5.11-2018.0.0.1
+web/php-56/extension/php-mysql@5.6.35,5.11-2018.0.0.1
+web/php-56/extension/php-mysqli@5.6.35,5.11-2018.0.0.1
+web/php-56/extension/php-opcache@5.6.35,5.11-2018.0.0.1
+web/php-56/extension/php-openssl@5.6.35,5.11-2018.0.0.1
+web/php-56/extension/php-pdo@5.6.35,5.11-2018.0.0.1
+web/php-56/extension/php-pdo_mysql@5.6.35,5.11-2018.0.0.1
+web/php-56/extension/php-pdo_sqlite@5.6.35,5.11-2018.0.0.1
+web/php-56/extension/php-pgsql@5.6.35,5.11-2018.0.0.1
+web/php-56/extension/php-pspell@5.6.35,5.11-2018.0.0.1
+web/php-56/extension/php-readline@5.6.35,5.11-2018.0.0.1
+web/php-56/extension/php-soap@5.6.35,5.11-2018.0.0.1
+web/php-56/extension/php-sockets@5.6.35,5.11-2018.0.0.1
+web/php-56/extension/php-tidy@5.6.35,5.11-2018.0.0.1
+web/php-56/extension/php-tokenizer@5.6.35,5.11-2018.0.0.1
+web/php-56/extension/php-wddx@5.6.35,5.11-2018.0.0.1
+web/php-56/extension/php-xdebug@2.3.3,5.11-2018.0.0.1
+web/php-56/extension/php-xmlreader@5.6.35,5.11-2018.0.0.1
+web/php-56/extension/php-xmlrpc@5.6.35,5.11-2018.0.0.1
+web/php-56/extension/php-xmlwriter@5.6.35,5.11-2018.0.0.1
+web/php-56/extension/php-xsl@5.6.35,5.11-2018.0.0.1
+web/php-56/extension/php-zip@5.6.35,5.11-2018.0.0.1
+web/php-56/extension/php-zlib@5.6.35,5.11-2018.0.0.1
+web/php-56/php-cgi@5.6.35,5.11-2018.0.0.1
+web/php-56/php-cli@5.6.35,5.11-2018.0.0.1
+web/php-56/php-common@5.6.35,5.11-2018.0.0.1
+web/php-56/php-fpm@5.6.35,5.11-2018.0.0.1
+web/php-56/php-pear@5.6.35,5.11-2018.0.0.1
 web/server/apache-13@1.3.41-2015.0.1.0
 web/server/apache-13/documentation@1.3.41,5.11-2015.0.1.0
 web/server/apache-22@2.2.31,5.11-2017.0.0.2
@@ -1277,6 +1331,7 @@ web/server/apache-22/module/apache-php56@5.6.30,5.11-2017.0.0.1
 web/server/apache-22/module/apache-php70@7.0.20,5.11-2017.0.0.2
 web/server/apache-24/module/apache-php54@5.4.45,5.11-2016.0.0.1
 web/server/apache-24/module/apache-php55@5.5.38,5.11-2016.0.0.1
+web/server/apache-24/module/apache-php56@5.6.35,5.11-2018.0.0.1
 web/server/apache-22/module/apache-proxy_html@3.1.2,5.11-2017.0.0.1
 web/server/apache-22/module/apache-security@2.7.7,5.11-2017.0.0.2
 web/server/apache-22/module/apache-sed@2.2.31,5.11-2017.0.0.2
