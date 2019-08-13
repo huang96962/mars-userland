@@ -97,10 +97,15 @@ $(BUILD_DIR)/$(MACH)/.built: $(SOURCE_DIR)/.patched
 	    -e 's|^export NIGHTLY_OPTIONS=.*|export NIGHTLY_OPTIONS=\"$(NIGHTLY_OPTIONS)\"|' \
 	    -e 's|^export VERSION=.*|export VERSION=\"$$(git log -1 --format=illumos-%h)\"|' \
 	    -e 's|^export CODEMGR_WS=.*|export CODEMGR_WS=\"$$PWD\"|' \
+	    -e 's|^export ENABLE_SMATCH=.*||' \
 	    -e 's|^export ON_CLOSED_BINS=.*|export ON_CLOSED_BINS=\"/opt/onbld/closed\"|' \
-	    -e 's|^export MULTI_PROTO=.*|export MULTI_PROTO=\"$(MULTI_PROTO)\"|'; \
+	    -e 's|^export MULTI_PROTO=.*|export MULTI_PROTO=\"$(MULTI_PROTO)\"|' \
+	    -e 's|^export SHADOW_CCS=.*||' \
+	    -e 's|^export SHADOW_CCCS=.*||' ; \
+	  echo export LC_ALL=en_US.UTF-8; \
 	  echo export PERL_VERSION=\"5.22\"; \
 	  echo export PERL_PKGVERS=\"-522\"; \
+	  echo export BUILDPY2TOOLS=\"#\"; \
 	  echo export BLD_JAVA_8=; \
 	  echo export CW_NO_SHADOW=1; \
 	  echo export __GNUC=\"\"; \
@@ -561,6 +566,12 @@ $(BUILD_DIR)/$(MACH)/publish.transforms: $(BUILD_DIR)/$(MACH)/.overlay
 	# We want to replace dependency on particular agpart version, but preserve dependency on any version
 	echo "<transform depend type=require fmri=pkg:/driver/graphics/agpgart@.* -> emit depend type=require fmri=pkg:/driver/graphics/agpgart>" >> $(BUILD_DIR)/$(MACH)/publish.transforms
 	echo "<transform depend type=require fmri=pkg:/driver/graphics/agpgart@.* -> drop>" >> $(BUILD_DIR)/$(MACH)/publish.transforms
+
+	# Fix pkgdepend issue with GCC 7 runtime (https://www.illumos.org/issues/11255)
+	echo "<transform depend type=require-any fmri=pkg:/system/library/gcc-\d+-runtime@.* -> emit depend type=require fmri=pkg:/system/library/gcc-7-runtime>" >> $(BUILD_DIR)/$(MACH)/publish.transforms
+	echo "<transform depend type=require-any fmri=pkg:/system/library/gcc-\d+-runtime@.* -> drop>" >> $(BUILD_DIR)/$(MACH)/publish.transforms
+	echo "<transform depend type=require-any fmri=pkg:/system/library/g\+\+-\d+-runtime@.* -> emit depend type=require fmri=pkg:/system/library/g++-7-runtime> " >> $(BUILD_DIR)/$(MACH)/publish.transforms
+	echo "<transform depend type=require-any fmri=pkg:/system/library/g\+\+-\d+-runtime@.* -> drop>" >> $(BUILD_DIR)/$(MACH)/publish.transforms
 
 	# Loader branding
 	echo "<transform set name=pkg.fmri value=pkg://[^/]*/system/boot/loader@.* -> emit file path=boot/loader.conf group=sys mode=0644 owner=root preserve=true>" >> $(BUILD_DIR)/$(MACH)/publish.transforms

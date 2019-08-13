@@ -19,7 +19,9 @@
 # CDDL HEADER END
 #
 # Copyright (c) 2012, 2013, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2019, Michal Nowak
 #
+
 include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		setuptools
@@ -29,8 +31,7 @@ COMPONENT_ARCHIVE=	$(COMPONENT_SRC).zip
 COMPONENT_ARCHIVE_HASH=	\
 	sha256:a222d126f5471598053c9a77f4b5d4f26eaa1f150ad6e01dcf1a42e185d05613
 COMPONENT_ARCHIVE_URL=	$(call pypi_url)
-COMPONENT_PROJECT_URL=	https://bitbucket.org/pypa/setuptools
-COMPONENT_BUGDB=	python-mod/setuptools
+COMPONENT_PROJECT_URL=	https://github.com/pypa/setuptools
 
 PYTHON_VERSIONS=	2.7 3.4 3.5
 
@@ -39,16 +40,15 @@ include $(WS_TOP)/make-rules/setup.py.mk
 include $(WS_TOP)/make-rules/ips.mk
 
 # Need to bootstrap setuptools before we can run setup
-
 COMPONENT_PREP_ACTION = (cd $(@D) ; $(PYTHON) bootstrap.py)
 
-# common targets
 build:		$(BUILD_NO_ARCH)
 
 install:	$(INSTALL_NO_ARCH)
 
 test:		$(NO_TESTS)
 
+# Auto-generated dependencies
 REQUIRED_PACKAGES += runtime/python-27
 REQUIRED_PACKAGES += runtime/python-34
 REQUIRED_PACKAGES += runtime/python-35
