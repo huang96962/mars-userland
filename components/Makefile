@@ -88,8 +88,8 @@ download prep:	$(COMPONENT_DIRS.nosetup)
 component-hook:	$(COMPONENT_DIRS.nosetup)
 
 clean:		$(COMPONENT_DIRS.nosetup)
-	$(RM) $(WS_TOP)/components/$(ENCUMBERED)components.mk \
-	$(WS_TOP)/components/$(ENCUMBERED)depends.mk \
+	$(PKGREPO) remove -s $(PKG_REPO) pkg://$(PUBLISHER)/*
+	$(RM) $(WS_TOP)/components/$(ENCUMBERED)depends.mk \
 	$(WS_TOP)/components/mapping.json \
 	.profile
 
