@@ -73,6 +73,7 @@ CONFIGURE_OPTIONS +=	--enable-samples
 # Parallel build fails. We either disable it, or build soapcpp2_yacc.c first.
 # We opt for the former.
 COMPONENT_BUILD_ARGS=
+COMPONENT_BUILD_GMAKE_ARGS=
 
 build:		$(BUILD_64)
 

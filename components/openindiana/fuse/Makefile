@@ -28,6 +28,7 @@ include $(WS_MAKE_RULES)/justmake.mk
 include $(WS_MAKE_RULES)/ips.mk
 
 PATH=/opt/onbld/bin/i386:/opt/onbld/bin:/usr/gnu/bin:/usr/bin:/usr/sbin:/sbin
+COMPONENT_BUILD_GMAKE_ARGS=
 
 $(BUILD_32):    $(SOURCE_DIR)/.prep
 	$(MKDIR) $(@D)

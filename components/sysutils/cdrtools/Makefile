@@ -47,6 +47,8 @@ PATH=	$(GCC_ROOT)/bin:/usr/bin:/usr/gnu/bin
 COMPONENT_INSTALL_ARGS +=  GMAKE_NOWARN=true
 COMPONENT_BUILD_ARGS += GMAKE_NOWARN=true
 
+COMPONENT_BUILD_GMAKE_ARGS=
+
 build:          $(BUILD_32)
 
 install:        $(INSTALL_32)

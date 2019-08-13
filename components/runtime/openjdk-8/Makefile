@@ -67,6 +67,8 @@ COMPONENT_BUILD_ARGS = JOBS=4
 
 COMPONENT_BUILD_TARGETS = images
 
+COMPONENT_BUILD_GMAKE_ARGS=
+
 CACERTS_DIR=$(WS_TOP)/components/openindiana/ca-certificates
 CACERTS_INSTALLED=$(CACERTS_DIR)/build/$(MACH32)/.installed
 CACERTS_PROTO_DIR=$(CACERTS_DIR)/build/prototype/$(MACH)
@@ -95,7 +97,6 @@ cacerts.out: $(BUILD_DIR_64)/.built $(CACERTS_INSTALLED)
                   -file $$cert                                          \
                   -storepass openindiana;                                    \
         done
-
 
 build: $(BUILD_64)
 

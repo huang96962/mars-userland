@@ -820,6 +820,7 @@ JPEG_LDFLAGS.32 =  -L$(JPEG_LIBDIR.32) -R$(JPEG_LIBDIR.32)
 JPEG_LDFLAGS.64 =  -L$(JPEG_LIBDIR.64) -R$(JPEG_LIBDIR.64)
 JPEG_LDFLAGS =     $(JPEG_LDFLAGS.$(BITS))
 
+COMPONENT_BUILD_GMAKE_ARGS=	-j10
 # This is the default BUILD version of tcl
 # Not necessarily the system's default version, i.e. /usr/bin/tclsh
 TCL_VERSION =  8.6
