@@ -36,7 +36,7 @@ include $(WS_MAKE_RULES)/configure.mk
 include $(WS_MAKE_RULES)/ips.mk
 
 CONFIGURE_OPTIONS += --disable-static
-CONFIGURE_OPTIONS += --enable-examples
+CONFIGURE_OPTIONS += --enable-examples=check
 CONFIGURE_OPTIONS += --disable-python-bindings
 CONFIGURE_OPTIONS += --disable-app
 

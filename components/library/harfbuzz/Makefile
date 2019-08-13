@@ -51,6 +51,7 @@ CONFIGURE_OPTIONS+=	--enable-shared
 CONFIGURE_OPTIONS+=	--disable-static
 CONFIGURE_OPTIONS+=	--with-graphite2=yes
 CONFIGURE_OPTIONS+=	--with-freetype=yes
+CONFIGURE_OPTIONS+=	--with-icu
 
 LDFLAGS += -lm
 

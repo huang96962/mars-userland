@@ -44,16 +44,6 @@ file path=usr/bin/gifinto
 file path=usr/bin/giftext
 file path=usr/bin/giftool
 
-file path=usr/share/man/man1/gif2rgb.1
-file path=usr/share/man/man1/gifbuild.1
-file path=usr/share/man/man1/gifclrmp.1
-file path=usr/share/man/man1/gifecho.1
-file path=usr/share/man/man1/giffix.1
-file path=usr/share/man/man1/gifinto.1
-file path=usr/share/man/man1/giflib.1
-file path=usr/share/man/man1/giftext.1
-file path=usr/share/man/man1/giftool.1
-
 file path=usr/include/gif_lib.h
 
 file path=usr/lib/$(MACH64)/libgif.so.7.0.0
