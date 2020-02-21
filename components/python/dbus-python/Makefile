@@ -10,18 +10,21 @@
 
 #
 # Copyright 2017 Alexander Pyhalov
+# Copyright 2019 Michal Nowak
 #
+
+BUILD_BITS=		32_and_64
 
 include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		dbus-python
-COMPONENT_VERSION=	1.2.8
+COMPONENT_VERSION=	1.2.14
 COMPONENT_PROJECT_URL=	http://www.freedesktop.org/wiki/Software/DBusBindings/
 COMPONENT_SUMMARY=	Python bindings for D-Bus
 COMPONENT_SRC=		$(COMPONENT_NAME)-$(COMPONENT_VERSION)
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.gz
 COMPONENT_ARCHIVE_HASH=	\
-    sha256:abf12bbb765e300bf8e2a1b2f32f85949eab06998dbda127952c31cb63957b6f
+	sha256:b10206ba3dd641e4e46411ab91471c88e0eec1749860e4285193ee68df84ac31
 COMPONENT_ARCHIVE_URL=	http://dbus.freedesktop.org/releases/dbus-python/$(COMPONENT_ARCHIVE)
 
 PATH=$(PATH.gnu)
@@ -40,6 +43,9 @@ BUILD_64 = $(VARIANTS_64:%=%/$(MACH64)/.built)
 
 INSTALL_32 = $(VARIANTS_32:%=%/$(MACH32)/.installed)
 INSTALL_64 = $(VARIANTS_64:%=%/$(MACH64)/.installed)
+
+TEST_32 = $(VARIANTS_32:%=%/$(MACH32)/.tested)
+TEST_64 = $(VARIANTS_64:%=%/$(MACH64)/.tested)
 
 $(VARIANT_PYTHON27)/$(MACH64)/.configured: BITS=64
 $(VARIANT_PYTHON27)/$(MACH64)/.configured: PYTHON=$(PYTHON.2.7.64)
@@ -64,31 +70,20 @@ $(VARIANT_PYTHON35)/$(MACH64)/.configured: PYTHON=$(PYTHON.3.5.64)
 $(VARIANT_PYTHON35)/$(MACH64)/.configured: am_cv_python_pyexecdir=$(PYTHON.3.5.VENDOR_PACKAGES.64)
 $(VARIANT_PYTHON35)/$(MACH64)/.configured: am_cv_python_pythondir=$(PYTHON.3.5.VENDOR_PACKAGES.64)
 
-include $(WS_MAKE_RULES)/prep.mk
-include $(WS_MAKE_RULES)/configure.mk
-include $(WS_MAKE_RULES)/ips.mk
+include $(WS_MAKE_RULES)/common.mk
 
 COMPONENT_PREP_ACTION = (cd $(@D) && autoreconf -fi)
 
 CONFIGURE_OPTIONS+=	--sysconfdir=/etc
-CONFIGURE_OPTIONS+=	--with-dbus-user=root
-CONFIGURE_OPTIONS+=	--with-dbus-daemondir=/usr/lib
 CONFIGURE_OPTIONS+=	--disable-static
 CONFIGURE_ENV+=		PYTHON=$(PYTHON)
 CONFIGURE_ENV+=		am_cv_python_pythondir="$(am_cv_python_pythondir)"
 CONFIGURE_ENV+=		am_cv_python_pyexecdir="$(am_cv_python_pyexecdir)"
 
-# common targets
-build:		$(BUILD_32_and_64)
-
-install:	$(INSTALL_32_and_64)
-
-test:		$(NO_TESTS)
-
-REQUIRED_PACKAGES += library/glib2
 REQUIRED_PACKAGES += runtime/python-27
 REQUIRED_PACKAGES += runtime/python-34
 REQUIRED_PACKAGES += runtime/python-35
-REQUIRED_PACKAGES += system/library/libdbus-glib
-REQUIRED_PACKAGES += system/library/libdbus
+# Auto-generated dependencies
+REQUIRED_PACKAGES += library/glib2
 REQUIRED_PACKAGES += system/library
+REQUIRED_PACKAGES += system/library/libdbus

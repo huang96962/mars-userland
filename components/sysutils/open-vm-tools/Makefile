@@ -11,15 +11,16 @@
 #
 # Copyright 2016 Adam Stevko
 # Copyright 2017 Andreas Grueninger, Grueninger GmbH, (grueni). All rights reserved.
-# Copyright 2018 Michal Nowak
+# Copyright 2019 Michal Nowak
 #
 
-PREFERRED_BITS=	64
+BUILD_BITS=		64
 
 include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		open-vm-tools
-COMPONENT_VERSION=	10.3.5
+COMPONENT_VERSION=	11.0.5
+COMPONENT_REVISION=	1
 COMPONENT_SUMMARY=	open-vm-tools is a set of services and modules that enable several features in VMware products for better management of, and seamless user interactions with, guests.
 COMPONENT_PROJECT_URL=	https://github.com/vmware/open-vm-tools
 COMPONENT_FMRI=		system/virtualization/open-vm-tools
@@ -27,13 +28,13 @@ COMPONENT_CLASSIFICATION= Applications/System Utilities
 COMPONENT_SRC=		$(COMPONENT_NAME)-stable-$(COMPONENT_VERSION)
 COMPONENT_ARCHIVE=	$(COMPONENT_NAME)-$(COMPONENT_VERSION).tar.gz
 COMPONENT_ARCHIVE_URL=	https://github.com/vmware/$(COMPONENT_NAME)/archive/stable-$(COMPONENT_VERSION).tar.gz
-COMPONENT_ARCHIVE_HASH=	sha256:c0ecd281d6113ca700b1ab0a10559db72e80d8fc03264d53ebfdc400578ab1b6
+COMPONENT_ARCHIVE_HASH=	sha256:f4300d8ccf665a3ff435476bc372a3f189a98c2b830730608d4286226802bd97
 COMPONENT_LICENSE=	LGPLv2.1
 COMPONENT_LICENSE_FILE=	$(COMPONENT_NAME).license
 
-include $(WS_MAKE_RULES)/prep.mk
-include $(WS_MAKE_RULES)/configure.mk
-include $(WS_MAKE_RULES)/ips.mk
+TEST_TARGET=		$(NO_TESTS)
+
+include $(WS_MAKE_RULES)/common.mk
 
 COMPONENT_POST_UNPACK_ACTION = \
 	($(MV) $(SOURCE_DIR)/open-vm-tools/* $(SOURCE_DIR) && \
@@ -42,7 +43,7 @@ COMPONENT_POST_UNPACK_ACTION = \
 COMPONENT_PREP_ACTION = ( cd $(@D) && autoreconf -v -i -f )	
 
 COMPONENT_PRE_CONFIGURE_ACTION = \
-  ($(CLONEY) $(SOURCE_DIR) $(@D) ) 
+	($(CLONEY) $(SOURCE_DIR) $(@D) )
 
 CFLAGS += -std=gnu99
 
@@ -64,7 +65,6 @@ CFLAGS += -Wno-unused-variable
 
 LDFLAGS += -lnsl
 
-CONFIGURE_OPTIONS += --disable-grabbitmqproxy
 CONFIGURE_OPTIONS += --disable-multimon
 CONFIGURE_OPTIONS += --disable-static
 CONFIGURE_OPTIONS += --disable-tests
@@ -78,13 +78,6 @@ CONFIGURE_OPTIONS += --sysconfdir=/etc
 
 # Need C++ compatible xdr headers
 CONFIGURE_OPTIONS += RPCGENFLAGS="-C"
-
-build:		$(BUILD_64)
-
-install:	$(INSTALL_64)
-
-# there are no tests defined
-test:		  $(NO_TESTS)
 
 # Build dependencies
 REQUIRED_PACKAGES += developer/documentation-tool/doxygen

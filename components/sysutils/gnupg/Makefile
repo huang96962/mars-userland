@@ -23,35 +23,26 @@
 # Copyright (c) 2019, Michal Nowak
 #
 
+BUILD_BITS=		64
+
 include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		gnupg
-COMPONENT_VERSION=	2.2.17
+COMPONENT_VERSION=	2.2.19
+COMPONENT_REVISION=	1
 COMPONENT_SRC=		$(COMPONENT_NAME)-$(COMPONENT_VERSION)
 COMPONENT_PROJECT_URL=	http://www.gnupg.org/
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.bz2
 COMPONENT_ARCHIVE_HASH=	\
-	sha256:afa262868e39b651a2db4c071fba90415154243e83a830ca00516f9a807fd514
+	sha256:242554c0e06f3a83c420b052f750b65ead711cc3fddddb5e7274fcdbb4e9dec0
 COMPONENT_ARCHIVE_URL=	ftp://ftp.gnupg.org/gcrypt/gnupg/$(COMPONENT_ARCHIVE)
 
-include $(WS_MAKE_RULES)/prep.mk
-include $(WS_MAKE_RULES)/configure.mk
-include $(WS_MAKE_RULES)/ips.mk
+include $(WS_MAKE_RULES)/common.mk
 
 PATH=$(PATH.gnu)
 
-# Force use of gnutls-3 pkgconfig during 2.x->3.x transition
-GNUTLS_PKG_CONFIG_PATH_32 = /usr/lib/pkgconfig/gnutls-3
-GNUTLS_PKG_CONFIG_PATH_64 = /usr/lib/$(MACH64)/pkgconfig/gnutls-3
-PKG_CONFIG_PATH = $(GNUTLS_PKG_CONFIG_PATH_$(BITS)):$(PKG_CONFIG_PATH.$(BITS))
-
-LD_OPTIONS.32 += -L/usr/lib/gnutls-3 -R/usr/lib/gnutls-3
-LD_OPTIONS.64 += -L/usr/lib/$(MACH64)/gnutls-3 -R/usr/lib/$(MACH64)/gnutls-3
-LD_OPTIONS += $(LD_OPTIONS.$(BITS))
-
 CFLAGS += $(CPP_LARGEFILES)
 CFLAGS += -I/usr/include/openldap
-CFLAGS += -I/usr/include/gnutls-3
 
 # If we pass -lc, -mt won't link with -lthread
 # (which is what it does by default, and we don't
@@ -86,9 +77,7 @@ CONFIGURE_OPTIONS  +=		--with-readline=$(CONFIGURE_PREFIX)
 
 MAN8LIST = addgnupghome applygnupgdefaults
 
-build:		$(BUILD_32)
-
-install:	$(INSTALL_32)
+install:	$(INSTALL_64)
 	( cd $(PROTOUSRSHARELOCALEDIR) ; \
 	    $(CP) -R 'en@boldquot' en )
 	( cd $(PROTOUSRSHAREMANDIR) ; \
@@ -99,8 +88,6 @@ install:	$(INSTALL_32)
 	    if test -f $$f.8 ; then \
 	    $(MV) -f $$f.8 $$f.1m ; fi ; \
 	    done )
-
-test:		$(TEST_32)
 
 # Missing dependencies for pinentry
 REQUIRED_PACKAGES += library/desktop/gtk2

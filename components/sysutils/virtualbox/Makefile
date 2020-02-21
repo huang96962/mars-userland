@@ -10,14 +10,14 @@
 
 #
 # Copyright 2017 Aurelien Larcher
-# Copyright 2019 Michal Nowak
+# Copyright 2020 Michal Nowak
 # Copyright 2019 Tim Mooney
 #
 
 include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=         VirtualBox
-COMPONENT_VERSION=      6.0.10
+COMPONENT_VERSION=      6.1.2
 COMPONENT_SUMMARY=      VirtualBox - general-purpose full virtualizer
 COMPONENT_PROJECT_URL=  http://www.virtualbox.org/
 COMPONENT_FMRI=         system/virtualbox
@@ -28,18 +28,19 @@ COMPONENT_DOWNLOAD_URL= \
 	http://download.virtualbox.org/virtualbox/$(COMPONENT_VERSION)
 COMPONENT_ARCHIVE_URL=  $(COMPONENT_DOWNLOAD_URL)/$(COMPONENT_ARCHIVE)
 COMPONENT_ARCHIVE_HASH= \
-	sha256:5236148a93267478fb6d306f6343aa9587d3f90f437f54c7b3485bd9d538d2f8
+	sha256:4326576e8428ea3626194fc82646347576e94c61f11d412a669fc8a10c2a1e67
 COMPONENT_LICENSE=      GPLv2
 
 COMPONENT_NAME_1=       VirtualBoxSDK
-COMPONENT_VERSION_1=    $(COMPONENT_VERSION)-132072
+COMPONENT_VERSION_1=    $(COMPONENT_VERSION)-135662
 COMPONENT_SRC_1=        $(COMPONENT_NAME_1)-$(COMPONENT_VERSION_1)
 COMPONENT_ARCHIVE_1=    $(COMPONENT_SRC_1).zip
 COMPONENT_ARCHIVE_URL_1=$(COMPONENT_DOWNLOAD_URL)/$(COMPONENT_ARCHIVE_1)
 COMPONENT_ARCHIVE_HASH_1= \
-	sha256:06a4dbc92b35959f4af89c1cadf2ed06448ad98bf1570024fe00c687e5a83ef3
+	sha256:9ca7392d07e1bba9536ec1fad8cb11207c867be0b430c0dbcfbb1cbf71641ead
 COMPONENT_LICENSE_1=      GPLv2
-UNPACK_ARGS_1= -r $(COMPONENT_SRC_1)
+
+UNPACK_ARGS_1=		-r $(COMPONENT_SRC_1)
 
 COMPONENT_POST_UNPACK_ACTION_1 = \
 	cd $(COMPONENT_SRC); $(LN) -s ../$(COMPONENT_SRC_1)/sdk .;
@@ -67,7 +68,6 @@ VBOX_FS_MODULES= vboxfs
 
 VBOX_BINS= VBoxControl VBoxService VBoxClient
 VBOX_SBINS= vboxmslnk
-VBOX_OGLLIBS= VBoxOGL.so VBoxEGL.so
 
 QT5_ROOT=/usr/lib/qt/5.8
 PATH=$(PATH.gnu):$(QT5_ROOT)/bin/$(MACH64)
@@ -118,6 +118,16 @@ LOCAL_CONFIG+='\nVBOX_WITH_DTRACE_R0DRV ='
 LOCAL_CONFIG+='\nVBOX_WITH_DTRACE_RC ='
 LOCAL_CONFIG+='\nVBOX_WITH_NATIVE_DTRACE ='
 
+# Do not allow compiler override in kmk files
+LOCAL_CONFIG+= '\nTOOL_GXX3PLAIN_CC  = $(CC)'
+LOCAL_CONFIG+= '\nTOOL_GXX3PLAIN_CXX = $(CXX)'
+LOCAL_CONFIG+= '\nTOOL_GXX3PLAIN_AS  = $(CC)'
+LOCAL_CONFIG+= '\nTOOL_GXX3PLAIN_LD  = $(CXX)'
+LOCAL_CONFIG+= '\nTOOL_GCC3PLAIN_CC  = $(CC)'
+LOCAL_CONFIG+= '\nTOOL_GCC3PLAIN_CXX = $(CXX)'
+LOCAL_CONFIG+= '\nTOOL_GCC3PLAIN_AS  = $(CC)'
+LOCAL_CONFIG+= '\nTOOL_GCC3PLAIN_LD  = $(CXX)'
+
 # Set OpenIndiana project as publisher of VirtualBox binaries
 VBOX_BUILD_PUBLISHER=OpenIndiana
 
@@ -149,7 +159,7 @@ CONFIGURE_OPTIONS += $(CONFIGURE_OPTIONS.$(BITS))
 
 VBOX_PREFIX   = /opt/VirtualBox
 VBOX_LIBDIR   = $(VBOX_PREFIX)/$(MACH64)
-VBOX_QT5_LIBS = VirtualBoxVM.so VBoxDbg.so VBoxGlobal.so
+VBOX_QT5_LIBS = VirtualBoxVM.so VBoxDbg.so UICommon.so
 VBOX_QT5_RPATH= $(VBOX_LIBDIR):$(GCC_LIBDIR):$(QT5_ROOT)/lib/$(MACH64)
 
 # As IPS is "no scripting land", user has to install the VNC extension Pack manually:
@@ -189,10 +199,6 @@ $(INSTALL_ADDITIONS):	$(INSTALL_64)
         done
 	cp $(VBOX_BINDIR)/1099.vboxclient $(PROTO_DIR)/usr/bin/VBoxClient-all
 	$(MKDIR) $(PROTO_DIR)/usr/lib/$(MACH64)
-	for fl in $(VBOX_OGLLIBS); do \
-		cp $(VBOX_BINDIR)/$$fl $(PROTO_DIR)/usr/lib/$(MACH64); \
-		cp $(VBOX_BINDIR.32)/$$fl $(PROTO_DIR)/usr/lib/; \
-        done
 	$(MKDIR) $(PROTO_DIR)/var/svc/manifest/application/virtualbox
 	cp $(VBOX_BINDIR)/vboxservice.xml $(PROTO_DIR)/var/svc/manifest/application/virtualbox
 	cp $(VBOX_BINDIR)/vboxmslnk.xml $(PROTO_DIR)/var/svc/manifest/application/virtualbox
@@ -210,7 +216,7 @@ $(BUILD_32_and_64): GMAKE= cd $(@D)/src/VBox/HostDrivers && $(SHELL) -c ". $(@D)
 
 # Sometimes 32-bit build is skipped silently. Better build like this:
 #	gmake build install sample-manifest
-build:		$(BUILD_32_and_64) 
+build:		$(BUILD_32_and_64)
 
 $(INSTALL_64): GMAKE= cd $(@D)/src/VBox/Installer && $(SHELL) -c ". $(@D)/env.sh && kmk solaris-install VBOX_PATH_SI_SCRATCH_PKG=$(PROTO_DIR)"
 

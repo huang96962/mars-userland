@@ -106,6 +106,11 @@ SOLARIS_VERSION =	$(OS_VERSION:5.%=2.%)
 # Target OS version
 PKG_SOLARIS_VERSION ?= 5.11
 PKG_OS_VERSION ?= 0.$(PKG_SOLARIS_VERSION)
+# auto-conf-y platform
+i386_PLAT = pc
+sparc_PLAT = sun
+PLAT=$($(MACH)_PLAT)
+GNU_TRIPLET=$(MACH)-$(PLAT)-solaris$(SOLARIS_VERSION)
 
 include $(WS_MAKE_RULES)/ips-buildinfo.mk
 
@@ -754,11 +759,16 @@ PKG_MACROS +=   PERL_VERSION=$(PERL_VERSION)
 
 # Config magic for Postgres/EnterpriseDB/...
 # Default DB version is the oldest one, for hopefully best built complatibility
-PG_VERSION ?=   9.4
+PG_VERSION ?=   9.5
 PG_IMPLEM ?=    postgres
 PG_VERNUM =     $(subst .,,$(PG_VERSION))
 # For dependencies, including REQUIRED_PACKAGES if needed
 PG_BASEPKG =    database/$(PG_IMPLEM)-$(PG_VERNUM)
+PG_DEVELOPER_PKG = $(PG_BASEPKG)/developer
+PG_LIBRARY_PKG = $(PG_BASEPKG)/library
+
+REQUIRED_PACKAGES_SUBST+= PG_DEVELOPER_PKG
+REQUIRED_PACKAGES_SUBST+= PG_LIBRARY_PKG
 
 PG_HOME =       $(USRDIR)/$(PG_IMPLEM)/$(PG_VERSION)
 PG_BINDIR.32 =  $(PG_HOME)/bin

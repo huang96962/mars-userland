@@ -18,7 +18,7 @@ include ../../../make-rules/shared-macros.mk
 COMPONENT_NAME= bacula
 
 COMPONENT_VERSION= 5.2.13
-COMPONENT_REVISION= 6
+COMPONENT_REVISION= 8
 COMPONENT_SUMMARY= Bacula (network backup solution)
 COMPONENT_SRC= $(COMPONENT_NAME)-$(COMPONENT_VERSION)
 COMPONENT_ARCHIVE= $(COMPONENT_SRC).tar.gz
@@ -60,6 +60,7 @@ CONFIGURE_OPTIONS+= --with-openssl
 CONFIGURE_OPTIONS+= --with-tcp-wrappers
 CONFIGURE_OPTIONS+= --with-readline=/usr/include/readline
 CONFIGURE_OPTIONS+= --disable-conio
+CONFIGURE_OPTIONS+= --disable-afs
 CONFIGURE_OPTIONS+= --disable-rpath
 CONFIGURE_ENV    += PYTHON="$(PYTHON)"
 CONFIGURE_ENV.64    += lt_cv_sys_lib_dlsearch_path_spec="/lib/$(MACH64) /usr/lib/$(MACH64)"
@@ -71,9 +72,13 @@ build: $(BUILD_32_and_64)
 
 install: $(INSTALL_32_and_64)
 
-REQUIRED_PACKAGES += SUNWcs
+test: $(NO_TESTS)
+
+# Auto-generated dependencies
+REQUIRED_PACKAGES += $(GCC_RUNTIME_PKG)
+REQUIRED_PACKAGES += $(GXX_RUNTIME_PKG)
+REQUIRED_PACKAGES += $(PG_LIBRARY_PKG)
 REQUIRED_PACKAGES += database/mariadb-101/library
-REQUIRED_PACKAGES += database/postgres-94/library
 REQUIRED_PACKAGES += database/sqlite-3
 REQUIRED_PACKAGES += library/lzo
 REQUIRED_PACKAGES += library/ncurses
@@ -82,7 +87,6 @@ REQUIRED_PACKAGES += library/security/openssl
 REQUIRED_PACKAGES += library/zlib
 REQUIRED_PACKAGES += runtime/perl-522
 REQUIRED_PACKAGES += runtime/python-27
+REQUIRED_PACKAGES += SUNWcs
 REQUIRED_PACKAGES += system/library
-REQUIRED_PACKAGES += $(GXX_RUNTIME_PKG)
-REQUIRED_PACKAGES += $(GCC_RUNTIME_PKG)
 REQUIRED_PACKAGES += system/library/math

@@ -21,14 +21,14 @@ PREFERRED_BITS=		64
 include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		firefox
-IPS_COMPONENT_VERSION=	60.8.0
+IPS_COMPONENT_VERSION=	60.9.0
 COMPONENT_VERSION=	$(IPS_COMPONENT_VERSION)esr
-COMPONENT_REVISION=	1
+COMPONENT_REVISION=	2
 COMPONENT_SUMMARY= 	Mozilla Firefox Web browser
 COMPONENT_SRC= 		$(COMPONENT_NAME)-$(IPS_COMPONENT_VERSION)
 COMPONENT_ARCHIVE= 	$(COMPONENT_NAME)-$(COMPONENT_VERSION).source.tar.xz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:c13387d944e635aebd5f1d2ce9ab77cb706a74043a240cbb7b70654519487fbe
+	sha256:9f453c8cc5669e46e38f977764d49a36295bf0d023619d9aac782e6bb3e8c53f
 ifdef CANDIDATE_BUILD
 COMPONENT_ARCHIVE_URL= \
 	https://ftp.mozilla.org/pub/firefox/candidates/$(COMPONENT_VERSION)-candidates/build$(CANDIDATE_BUILD)/source/$(COMPONENT_ARCHIVE)
@@ -135,11 +135,13 @@ COMPONENT_POST_INSTALL_ACTION += \
 
 install: $(INSTALL_64)
 
+test: $(NO_TESTS)
+
 # Build dependencies
 REQUIRED_PACKAGES += developer/build/autoconf-213
 REQUIRED_PACKAGES += library/audio/pulseaudio
 REQUIRED_PACKAGES += system/header/header-audio
-REQUIRED_PACKAGES += developer/clang-80
+REQUIRED_PACKAGES += developer/clang-90
 REQUIRED_PACKAGES += developer/lang/rustc
 REQUIRED_PACKAGES += gnome/config/gconf
 REQUIRED_PACKAGES += runtime/python-27

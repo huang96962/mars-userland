@@ -19,27 +19,26 @@
 # CDDL HEADER END
 #
 # Copyright (c) 2011, 2013, Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2019, Michal Nowak
 #
 
-PREFERRED_BITS=		64
+BUILD_BITS=		64
 
 include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		bind
-COMPONENT_VERSION=	9.14.4
+COMPONENT_VERSION=	9.14.10
 COMPONENT_SRC=		$(COMPONENT_NAME)-$(COMPONENT_VERSION)
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.gz
 COMPONENT_PROJECT_URL=	http://www.isc.org/software/bind/
 COMPONENT_ARCHIVE_HASH=	 \
-	sha256:312efb82a6889074f31ef2849af498b3ec97ca69acd5c4e5e4b4045a8fe6b83f
+	sha256:4ab98d5ce3102034b8a21a2fe59426aeb05bfa0be47521127dfccf09af60735a
 COMPONENT_ARCHIVE_URL=	\
 	http://ftp.isc.org/isc/bind9/$(COMPONENT_VERSION)/$(COMPONENT_ARCHIVE)
 COMPONENT_LICENSE=	MPL v2.0
 COMPONENT_LICENSE_FILE=	COPYRIGHT
 
-include $(WS_MAKE_RULES)/prep.mk
-include $(WS_MAKE_RULES)/configure.mk
-include $(WS_MAKE_RULES)/ips.mk
+include $(WS_MAKE_RULES)/common.mk
 
 PYTHON_VERSION=3.5
 
@@ -59,6 +58,7 @@ CFLAGS += $(CPP_XPG6MODE)
 # DNS libraries are in usr/lib/dns - Override settings from configure.mk
 CONFIGURE_LIBDIR.64 =	$(CONFIGURE_PREFIX)/lib/dns/$(MACH64)
 
+CONFIGURE_OPTIONS +=	--disable-static
 CONFIGURE_OPTIONS +=	--with-libtool
 CONFIGURE_OPTIONS +=	--sysconfdir=/etc
 CONFIGURE_OPTIONS +=	--localstatedir=/var
@@ -76,11 +76,6 @@ CONFIGURE_ENV +=	PYTHON=$(PYTHON)
 
 COMPONENT_BUILD_ENV += PYTHON_VENDOR_DIR=$(PYTHON_VENDOR_PACKAGES)
 COMPONENT_INSTALL_ENV += PYTHON_VENDOR_DIR=$(PYTHON_VENDOR_PACKAGES)
-
-# Enable ASLR for this component
-ASLR_MODE = $(ASLR_ENABLE)
-
-build:		$(BUILD_64)
 
 # Install.
 #
@@ -128,8 +123,6 @@ COMPONENT_TEST_ARGS =   -d $(BUILD_DIR)/test/config
 COMPONENT_TEST_ARGS +=  -p $(PROTO_DIR)
 
 $(TEST_64):	$(INSTALL_64)
-
-test: $(TEST_64)
 
 .PHONY: test-version
 test-version:

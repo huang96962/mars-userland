@@ -14,10 +14,13 @@
 # Copyright 2016-2018 Aurelien Larcher
 #
 
+BUILD_BITS= 32_and_64
+
 include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME= xorg-server
 COMPONENT_VERSION= 1.19.7
+COMPONENT_REVISION= 2
 COMPONENT_SUMMARY= Xorg - X11R7 X server
 COMPONENT_SRC= $(COMPONENT_NAME)-$(COMPONENT_VERSION)
 COMPONENT_ARCHIVE= $(COMPONENT_SRC).tar.bz2
@@ -30,9 +33,9 @@ COMPONENT_CLASSIFICATION= System/X11
 COMPONENT_LICENSE_FILE = COPYING
 COMPONENT_LICENSE = MIT
 
-include $(WS_MAKE_RULES)/prep.mk
-include $(WS_MAKE_RULES)/configure.mk
-include $(WS_MAKE_RULES)/ips.mk
+TEST_TARGET= $(NO_TESTS)
+
+include $(WS_MAKE_RULES)/common.mk
 
 COMPONENT_POST_UNPACK_ACTION +=  ( cp -r $(COMPONENT_DIR)/srcs/* $(SOURCE_DIR))
 
@@ -118,17 +121,10 @@ COMPONENT_POST_BUILD_ACTION += ( $(ENV) $(COMPONENT_BUILD_ENV) $(CONFIGURE_ENV) 
 COMPONENT_POST_INSTALL_ACTION += ( $(ENV) $(COMPONENT_BUILD_ENV) $(CONFIGURE_ENV) $(MAKE) $(COMPONENT_INSTALL_ARGS) \
 			-C $(BUILD_DIR_$(BITS))/os/solaris/mdb install )
 
-build: $(BUILD_32_and_64)
-
-install: $(INSTALL_32_and_64)
-
 # Build dependencies
 REQUIRED_PACKAGES += x11/documentation/xorg-docs
 REQUIRED_PACKAGES += x11/documentation/xorg-sgml-doctools
-REQUIRED_PACKAGES += x11/header/dri2proto
-REQUIRED_PACKAGES += x11/header/dri3proto
-REQUIRED_PACKAGES += x11/header/glproto
-REQUIRED_PACKAGES += x11/header/xf86driproto
+REQUIRED_PACKAGES += x11/header/x11-protocols
 REQUIRED_PACKAGES += x11/font-util
 REQUIRED_PACKAGES += x11/library/libxres
 REQUIRED_PACKAGES += x11/library/xcb-util

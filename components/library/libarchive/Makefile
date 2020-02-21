@@ -23,11 +23,13 @@
 # Copyright (c) 2019, Michal Nowak
 #
 
+PREFERRED_BITS=		64
+BUILD_BITS=		32_and_64
+
 include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		libarchive
-COMPONENT_VERSION=	3.3.3
-COMPONENT_REVISION=	3
+COMPONENT_VERSION=	3.4.1
 COMPONENT_SUMMARY=	multi-format archive and compression library
 COMPONENT_DESCRIPTION=	The libarchive(3LIB) library provides a flexible\
  interface for reading and writing archives in various formats such as\
@@ -40,16 +42,14 @@ COMPONENT_SRC=		libarchive-$(COMPONENT_VERSION)
 COMPONENT_PROJECT_URL=	http://www.libarchive.org/
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.gz
 COMPONENT_ARCHIVE_HASH=	\
-	sha256:ba7eb1781c9fbbae178c4c6bad1c6eb08edab9a1496c64833d1715d022b30e2e
+	sha256:fcf87f3ad8db2e4f74f32526dee62dd1fb9894782b0a503a89c9d7a70a235191
 COMPONENT_ARCHIVE_URL= \
-	http://libarchive.org/downloads/$(COMPONENT_ARCHIVE)
+	https://github.com/libarchive/libarchive/releases/download/v$(COMPONENT_VERSION)//$(COMPONENT_ARCHIVE)
 COMPONENT_FMRI=        library/libarchive
 COMPONENT_CLASSIFICATION=       System/Libraries
 COMPONENT_LICENSE=      BSD-like
 
-include $(WS_MAKE_RULES)/prep.mk
-include $(WS_MAKE_RULES)/configure.mk
-include $(WS_MAKE_RULES)/ips.mk
+include $(WS_MAKE_RULES)/common.mk
 
 CONFIGURE_OPTIONS += --disable-static
 CONFIGURE_OPTIONS += --enable-shared
@@ -102,12 +102,6 @@ COMPONENT_TEST_TRANSFORMS += \
         '-e "/PASS:/p" ' \
         '-e "/FAIL:/p" ' \
         '-e "/ERROR:/p" '
-
-build:		$(BUILD_32_and_64)
-
-install:	$(INSTALL_32_and_64)
-
-test:		$(TEST_32_and_64)
 
 # Build requirements
 REQUIRED_PACKAGES += print/filter/ghostscript

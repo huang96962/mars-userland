@@ -9,29 +9,30 @@
 #
 
 #
-# Copyright 2017 Andreas Grueninger, Grueninger GmbH, (grueni). All rights reserved.
+# Copyright 2019 Andreas Grueninger, Grueninger GmbH, (grueni). All rights reserved.
+# Copyright 2020 Michal Nowak
 #
+
+BUILD_BITS=		64
 
 include ../../../make-rules/shared-macros.mk
 
 PATH= $(USRBINDIR64):$(PATH.gnu)
 
-COMPONENT_NAME= pacemaker
-COMPONENT_VERSION= 1.1.17
-COMPONENT_REVISION= 2
-COMPONENT_FMRI= application/cluster/$(COMPONENT_NAME)
+COMPONENT_NAME=		pacemaker
+COMPONENT_VERSION=	1.1.21
+COMPONENT_REVISION=	3
+COMPONENT_FMRI=		application/cluster/$(COMPONENT_NAME)
 COMPONENT_CLASSIFICATION= System/Services
-COMPONENT_SRC= $(COMPONENT_NAME)-Pacemaker-$(COMPONENT_VERSION)
-COMPONENT_ARCHIVE= $(COMPONENT_NAME)-$(COMPONENT_VERSION).tar.gz
-COMPONENT_ARCHIVE_HASH= sha256:96e04751e85a266e2daa8c590000a151ff37f0bb7b873d77e38534299d399803
-COMPONENT_PROJECT_URL= https://www.clusterlab.org
-COMPONENT_ARCHIVE_URL= https://github.com/Clusterlabs/$(COMPONENT_NAME)/archive/Pacemaker-$(COMPONENT_VERSION).tar.gz
-COMPONENT_LICENSE= GPLv2,LGPLv2,BSD
-COMPONENT_SUMMARY= Pacemaker is an advanced, scalable high-availability cluster resource manager.
+COMPONENT_SRC=		$(COMPONENT_NAME)-Pacemaker-$(COMPONENT_VERSION)
+COMPONENT_ARCHIVE=	$(COMPONENT_NAME)-$(COMPONENT_VERSION).tar.gz
+COMPONENT_ARCHIVE_HASH=	sha256:4914f2caf5676ecf54b2fd19c59b40268a54b04703b56cf840cb63fbdbbb7d06
+COMPONENT_PROJECT_URL=	https://www.clusterlab.org
+COMPONENT_ARCHIVE_URL=	https://github.com/Clusterlabs/$(COMPONENT_NAME)/archive/Pacemaker-$(COMPONENT_VERSION).tar.gz
+COMPONENT_LICENSE=	GPLv2,LGPLv2,BSD
+COMPONENT_SUMMARY=	Pacemaker is an advanced, scalable high-availability cluster resource manager.
 
-include $(WS_MAKE_RULES)/prep.mk
-include $(WS_MAKE_RULES)/configure.mk
-include $(WS_MAKE_RULES)/ips.mk
+include $(WS_MAKE_RULES)/common.mk
 
 COMPONENT_PREP_ACTION=(cd $(SOURCE_DIR); $(CONFIG_SHELL) autogen.sh )
 
@@ -40,13 +41,6 @@ COMPONENT_PRE_CONFIGURE_ACTION=($(CLONEY) $(SOURCE_DIR) $(@D))
 CONFIGURE_SCRIPT= $(@D)/configure
 
 CFLAGS += -D__EXTENSIONS__ -D_POSIX_PTHREAD_SEMANTICS -lssp_nonshared -lssp -lnsl
-
-# Force use of gnutls-3 pkgconfig during 2.x->3.x transition
-GNUTLS_PKG_CONFIG_PATH_64 = /usr/lib/$(MACH64)/pkgconfig/gnutls-3
-PKG_CONFIG_PATH = $(GNUTLS_PKG_CONFIG_PATH_$(BITS)):$(PKG_CONFIG_PATH.$(BITS))
-
-LD_OPTIONS.64 += -L/usr/lib/$(MACH64)/gnutls-3 -R/usr/lib/$(MACH64)/gnutls-3
-LD_OPTIONS += $(LD_OPTIONS.$(BITS))
 
 CONFIGURE_OPTIONS.64 += --libexecdir=$(CONFIGURE_PREFIX)/lib
 CONFIGURE_OPTIONS += --sysconfdir=/etc
@@ -67,38 +61,32 @@ CONFIGURE_OPTIONS += $(CONFIGURE_OPTIONS.$(BITS))
 CONFIGURE_ENV.64 += LT_SYS_LIBRARY_PATH="/lib/$(MACH64):/usr/lib/$(MACH64)"
 
 COMPONENT_POST_INSTALL_ACTION=( \
-    $(RM) -r $(PROTO_DIR)$(USRSHAREDIR)/$(COMPONENT_NAME)/examples; \
-    $(MKDIR) $(PROTO_DIR)$(USRSHAREDIR)/$(COMPONENT_NAME)/examples; \
-    $(MV)    $(PROTO_DIR)/etc/logrotate.d  $(PROTO_DIR)$(USRSHAREDIR)/$(COMPONENT_NAME)/examples;)
+	$(RM) -r $(PROTO_DIR)$(USRSHAREDIR)/$(COMPONENT_NAME)/examples; \
+	$(MKDIR) $(PROTO_DIR)$(USRSHAREDIR)/$(COMPONENT_NAME)/examples; \
+	$(MV)    $(PROTO_DIR)/etc/logrotate.d  $(PROTO_DIR)$(USRSHAREDIR)/$(COMPONENT_NAME)/examples;)
 
-CONFIGURE_SBINDIR.64= $(CONFIGURE_SBINDIR.32)
-
-build:          $(BUILD_64)
-
-install:        $(INSTALL_64)
-
-test:           $(TESTS_64)
-
-REQUIRED_PACKAGES += SUNWcs
-REQUIRED_PACKAGES += utility/arpsend
-REQUIRED_PACKAGES += application/cluster/corosync
-REQUIRED_PACKAGES += application/cluster/cluster-glue
+# added manually, not found as dependency
+REQUIRED_PACKAGES += text/asciidoc
 REQUIRED_PACKAGES += application/cluster/resource-agents
 REQUIRED_PACKAGES += library/libstatgrab
-REQUIRED_PACKAGES += library/libesmtp
-REQUIRED_PACKAGES += library/libqb
+
+# Auto-generated dependencies
+REQUIRED_PACKAGES += application/cluster/cluster-glue
+REQUIRED_PACKAGES += application/cluster/corosync
 REQUIRED_PACKAGES += compress/bzip2
 REQUIRED_PACKAGES += library/glib2
 REQUIRED_PACKAGES += library/gnutls-3
+REQUIRED_PACKAGES += library/libesmtp
+REQUIRED_PACKAGES += library/libqb
 REQUIRED_PACKAGES += library/libxml2
 REQUIRED_PACKAGES += library/libxslt
 REQUIRED_PACKAGES += library/ncurses
+REQUIRED_PACKAGES += library/pcre2
 REQUIRED_PACKAGES += runtime/perl-522
 REQUIRED_PACKAGES += shell/bash
+REQUIRED_PACKAGES += SUNWcs
 REQUIRED_PACKAGES += system/library
 REQUIRED_PACKAGES += $(GXX_RUNTIME_PKG)
 REQUIRED_PACKAGES += system/library/libdbus
-REQUIRED_PACKAGES += system/library/math
 REQUIRED_PACKAGES += system/management/snmp/net-snmp
-# added manually, not found as dependency
-REQUIRED_PACKAGES += text/asciidoc
+

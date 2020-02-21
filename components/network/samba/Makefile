@@ -24,25 +24,30 @@
 # Copyright 2019 Rouven Weiler
 #
 
+BUILD_BITS =			64_and_32
+BUILD_STYLE =			waf
+
 include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME =		samba
 COMPONENT_FMRI =		service/network/samba
-COMPONENT_VERSION =		4.10.6
+COMPONENT_VERSION =		4.11.6
+COMPONENT_REVISION =		1
 COMPONENT_SRC =			$(COMPONENT_NAME)-$(COMPONENT_VERSION)
 COMPONENT_PROJECT_URL =		http://www.samba.org/
-COMPONENT_ARCHIVE =		$(COMPONENT_SRC).tar.gz
-COMPONENT_ARCHIVE_HASH = 	sha256:9efbeb52db1203dc779b118f1c48c161e569f7a6af5101e745497ee6296eef42
+COMPONENT_ARCHIVE =             $(COMPONENT_SRC).tar.gz
+COMPONENT_ARCHIVE_HASH = 	sha256:91438f4d7b71f673421435fa7f26b03b613f214139636ce50af35bc2ff09ef38
 COMPONENT_ARCHIVE_URL =		http://us1.samba.org/samba/ftp/stable/$(COMPONENT_ARCHIVE)
 COMPONENT_SUMMARY =		samba - A Windows SMB/CIFS fileserver for UNIX
 COMPONENT_LICENSE =		GPLv3
 COMPONENT_LICENSE_FILE = 	$(COMPONENT_NAME).license
 COMPONENT_CLASSIFICATION =	System/File System
 
-include $(WS_MAKE_RULES)/prep.mk
-include $(WS_MAKE_RULES)/waf.mk
-include $(WS_MAKE_RULES)/ips.mk
+TEST_TARGET =		$(NO_TESTS)
 
+include $(WS_MAKE_RULES)/common.mk
+
+PERL_VERSION = 5.24
 PYTHON_VERSION = 3.5
 PY3_CYTHON_NAMING =\#
 
@@ -54,21 +59,21 @@ PKG_OPTIONS +=		-I$(COMPONENT_DIR)
 # Set the pkg... path to search files in ./Solaris/ dir (mainly the SMF manifests are there)
 PKG_PROTO_DIRS +=	$(COMPONENT_DIR)
 
-CFLAGS +=	$($(COMPILER)_C99_ENABLE)
-CPPFLAGS +=	$(CPP_LARGEFILES) $(CPP_XPG6MODE) -I/usr/include/openldap
+$(BUILD_DIR_32)/%:	MACHLIBDIR=
+$(BUILD_DIR_64)/%:	MACHLIBDIR=/$(MACH64)
 
-LDFLAGS.64 +=   -L/usr/lib/$(MACH64)/gnutls-3 -R/usr/lib/$(MACH64)/gnutls-3
-LDFLAGS.64 +=	-L/usr/lib/samba/$(MACH64) -R/usr/lib/samba/$(MACH64)
-LDFLAGS.64 +=	-L/usr/lib/samba/private/$(MACH64) -R/usr/lib/samba/private/$(MACH64)
-LDFLAGS.64 +=	-L/usr/gnu/lib/$(MACH64) -R/usr/gnu/lib/$(MACH64)
+CFLAGS +=	$($(COMPILER)_C99_ENABLE) -D_POSIX_PTHREAD_SEMANTICS
+CPPFLAGS +=	$(CPP_LARGEFILES) $(CPP_XPG6MODE) 
+CPPFLAGS +=	-I/usr/include/openldap
 
-LDFLAGS +=      -lrt -lsec -lcrypt -lmd5 -lsocket -lnsl -lsendfile $(LD_FLAGS.$(BITS))
-LDFLAGS +=      -lldap_r -lsendfile -lavahi-common -lavahi-core $(LDFLAGS.$(BITS))
+LDFLAGS +=	-R/usr/lib/samba$(MACHLIBDIR)
+LDFLAGS +=	-R/usr/lib/samba/private$(MACHLIBDIR)
+LDFLAGS +=	-L$(GNULIB.$(BITS)) -R$(GNULIB.$(BITS))
+
+LDFLAGS +=      -lrt -lsec -lcrypt -lmd5 -lsocket -lnsl -lsendfile
+LDFLAGS +=      -lldap_r -lsendfile -lavahi-common -lavahi-core 
 
 LD_OPTIONS +=	-B direct
-
-# Force use of gnutls-3 pkgconfig during 2.x->3.x transition
-PKG_CONFIG_PATH =		$(PKG_CONFIG_PATH.$(BITS))/gnutls-3:$(PKG_CONFIG_PATH.$(BITS))
 
 #
 # set everything for target configure.
@@ -78,6 +83,8 @@ CONFIGURE_PREFIX =	/usr/lib/samba
 CONFIGURE_ENV +=	CPP="$(CC) -E"
 CONFIGURE_ENV +=	CPPFLAGS="$(CPPFLAGS)"
 CONFIGURE_ENV +=	CUPS_CONFIG=$(USRBINDIR)/cups-config
+CONFIGURE_ENV +=	PATH=$(GNUBIN.$(BITS)):$(USRBINDIR.$(BITS)):$(PATH.gnu)
+CONFIGURE_ENV +=	PERL=$(PERL)
 CONFIGURE_ENV +=	PYTHONARCHDIR=$(PYTHON_VENDOR_PACKAGES)/samba
 
 # --enable-fhs should not be on
@@ -106,6 +113,7 @@ CONFIGURE_OPTIONS +=	--with-ads
 CONFIGURE_OPTIONS +=	--with-winbind
 CONFIGURE_OPTIONS +=	--with-ldap
 CONFIGURE_OPTIONS +=	--with-libldap=ldap_r
+CONFIGURE_OPTIONS +=	--without-systemd
 
 CONFIGURE_OPTIONS +=	--nopyo
 CONFIGURE_OPTIONS +=    --nopycache
@@ -113,26 +121,31 @@ CONFIGURE_OPTIONS +=	--disable-rpath
 CONFIGURE_OPTIONS +=	--bundled-libraries=ALL
 CONFIGURE_OPTIONS +=	--python=$(PYTHON)
 
+$(BUILD_32):	COMPONENT_BUILD_TARGETS= --targets=nss_winbind,pamwinbind 
+$(BUILD_32):	PYTHON_VERSION=3.4
+
+# do not do waf install for winbind only - override the recipe
+$(INSTALL_32): $(BUILD_32)
+	/bin/sh -c "cd $(@D)  &&\
+	    $(INSTALL) -d $(PROTO_DIR)/usr/lib/samba$(MACHLIBDIR)  &&\
+	    $(INSTALL) -m 0555 -t $(PROTO_DIR)/usr/lib/samba$(MACHLIBDIR) bin/shared/!(pam_*).so* && \
+	    $(INSTALL) -d $(PROTO_DIR)/usr/lib/samba/security$(MACHLIBDIR) && \
+	    $(INSTALL) -m 0555 -t $(PROTO_DIR)/usr/lib/samba/security$(MACHLIBDIR) bin/shared/pam_*.so* && \
+	    $(INSTALL) -d $(PROTO_DIR)/usr/lib/samba/private$(MACHLIBDIR) && \
+	    $(INSTALL) -m 0555 -t $(PROTO_DIR)/usr/lib/samba/private$(MACHLIBDIR) bin/shared/private/*.so*"
+	$(TOUCH) $@
+
 #
 # set everything for target build.
 #
-COMPONENT_BUILD_ARGS += $(WAF_BUILD_OPTIONS) 
-
 COMPONENT_POST_INSTALL_ACTION += \
 	$(MKDIR) $(PROTO_DIR)$(ETCDIR)/samba ; \
 	(sed -f $(COMPONENT_DIR)/Solaris/smbconf.sed \
 		> $(PROTO_DIR)$(ETCDIR)/samba/smb.conf.default $(BUILD_DIR_64)/examples/smb.conf.default) 
 
-#
-# common targets
-#
-build:		$(BUILD_64)
-
-install:	$(INSTALL_64)
-
-test:		$(NO_TESTS)
-
-system-test:    $(NO_TESTS)
+# Build dependencies
+# We need 32-bit python to build 32-bit libraries
+REQUIRED_PACKAGES += runtime/python-34
 
 # Auto-generated dependencies
 REQUIRED_PACKAGES += $(GXX_RUNTIME_PKG)
@@ -147,7 +160,6 @@ REQUIRED_PACKAGES += library/print/cups-libs
 REQUIRED_PACKAGES += library/readline
 REQUIRED_PACKAGES += library/security/gpgme
 REQUIRED_PACKAGES += library/security/openssl
-REQUIRED_PACKAGES += runtime/perl-522
 REQUIRED_PACKAGES += runtime/perl-524
 REQUIRED_PACKAGES += runtime/python-35
 REQUIRED_PACKAGES += SUNWcs

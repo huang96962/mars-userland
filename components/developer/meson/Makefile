@@ -9,13 +9,17 @@
 
 #
 # Copyright 2017 Aurelien Larcher
-# Copyright 2018 Michal Nowak
+# Copyright 2019 Michal Nowak
 #
+
+BUILD_STYLE=setup.py
+BUILD_BITS=NO_ARCH
 
 include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=          meson
-COMPONENT_VERSION=       0.51.1
+COMPONENT_VERSION=       0.51.2
+COMPONENT_REVISION=      2
 COMPONENT_SUMMARY=       The Meson Build system
 COMPONENT_PROJECT_URL=   http://mesonbuild.com/
 COMPONENT_FMRI=          developer/build/meson
@@ -25,17 +29,17 @@ COMPONENT_ARCHIVE=      $(COMPONENT_SRC).tar.gz
 COMPONENT_ARCHIVE_URL= \
   https://github.com/mesonbuild/meson/releases/download/$(COMPONENT_VERSION)/$(COMPONENT_ARCHIVE)
 COMPONENT_ARCHIVE_HASH= \
-  sha256:f27b7a60f339ba66fe4b8f81f0d1072e090a08eabbd6aa287683b2c2b9dd2d82
+  sha256:23688f0fc90be623d98e80e1defeea92bbb7103bf9336a5f5b9865d36e892d76
 COMPONENT_LICENSE=      APLv2
 
 PATCH_LEVEL = 0
 
-include $(WS_MAKE_RULES)/prep.mk
-include $(WS_MAKE_RULES)/setup.py.mk
-include $(WS_MAKE_RULES)/ips.mk
+TEST_TARGET = $(TEST_64)
 
 PYTHON_VERSION =3.5
 PYTHON_VERSIONS=3.5
+
+include $(WS_MAKE_RULES)/common.mk
 
 PATH=$(PATH.gnu)
 
@@ -56,12 +60,6 @@ COMPONENT_TEST_ENV += \
 		MESON_PRINT_TEST_OUTPUT=1
 
 COMPONENT_TEST_ARGS = run_tests.py
-
-build:          $(BUILD_NO_ARCH)
-
-install:        $(INSTALL_NO_ARCH)
-
-test:		$(TEST_64)
 
 # Auto-generated dependencies
 REQUIRED_PACKAGES += developer/build/ninja
