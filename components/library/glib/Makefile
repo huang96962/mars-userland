@@ -38,6 +38,9 @@ PATH=$(PATH.gnu)
 
 include $(WS_MAKE_RULES)/common.mk
 
+COMPONENT_PREP_ACTION = \
+	$(CHMOD) +x $(SOURCE_DIR)/gio/gio-querymodules-wrapper.py $(SOURCE_DIR)/gio/tests/gengiotypefuncs.py
+
 PYTHON_VERSION = 3.5
 
 LDFLAGS += -lsocket -lsecdb -lnsl
