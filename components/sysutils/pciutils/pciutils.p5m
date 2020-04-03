@@ -28,4 +28,4 @@ file path=usr/share/man/man8/lspci.8
 file path=usr/share/man/man8/setpci.8
 file path=usr/share/man/man8/update-pciids.8
 
-depend fmri=system/pciutils/pci.ids@2.2 type=require
+#depend fmri=system/pciutils/pci.ids@2.2 type=require
