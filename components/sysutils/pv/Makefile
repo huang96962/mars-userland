@@ -43,6 +43,8 @@ include $(WS_MAKE_RULES)/prep.mk
 include $(WS_MAKE_RULES)/configure.mk
 include $(WS_MAKE_RULES)/ips.mk
 
+COMPONENT_BUILD_GMAKE_ARGS=
+
 PKG_PROTO_DIRS += $(BUILD_DIR_32)
 
 COMPONENT_PRE_CONFIGURE_ACTION = \
