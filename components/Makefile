@@ -69,6 +69,7 @@ clean:			TARGET = clean
 clobber:		TARGET = clobber
 test:			TARGET = test
 component-hook:		TARGET = component-hook
+clp:			TARGET = clean-publish
 prep build install pre-publish publish test:	TEMPLATE_ZONE=$(ZONE)
 prep build install pre-publish publish test:	LOG = >$(WS_LOGS)/$(subst /,.,$@).$(TARGET).log 2>&1
 
@@ -92,6 +93,9 @@ clean:		$(COMPONENT_DIRS.nosetup)
 	$(RM) $(WS_TOP)/components/$(ENCUMBERED)depends.mk \
 	$(WS_TOP)/components/mapping.json \
 	.profile
+
+clp:	$(COMPONENT_DIRS.nosetup)
+	$(PKGREPO) remove -s $(PKG_REPO) pkg://$(PUBLISHER)/*
 
 clobber:	$(COMPONENT_DIRS.nosetup) clean
 	@cd $(WS_TOP)/tools ; echo "clobbering tools..." ; $(GMAKE) clobber

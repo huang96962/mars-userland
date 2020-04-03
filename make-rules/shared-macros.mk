@@ -1357,3 +1357,17 @@ endef
 print-package-%:
 	@$(call print-package-rule,$(shell tr '[a-z]' '[A-Z]' <<< $*))
 
+clean-publish:
+	if [ -f $(BUILD_DIR)/.published* ]; \
+	then \
+		rm $(BUILD_DIR)/.published*; \
+	fi; \
+	if [ -f $(BUILD_DIR_32)/.published* ]; \
+	then \
+		rm $(BUILD_DIR_32)/.published*; \
+	fi; \
+	if [ -f $(BUILD_DIR_64)/.published* ]; \
+	then \
+		rm $(BUILD_DIR_64)/.published*; \
+	fi; 
+
