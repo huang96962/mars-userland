@@ -13,12 +13,3 @@ Fix stack-clash on SunOS.
              // Linux doesn't allocate the whole stack right away, and
              // the kernel has its own stack-guard mechanism to fault
              // when growing too close to an existing mapping.  If we map
-@@ -354,7 +354,7 @@ pub mod guard {
-     }
- 
-     pub unsafe fn deinit() {
--        if !cfg!(target_os = "linux") {
-+        if cfg!(not(any(target_os = "linux", target_os = "solaris"))) {
-             if let Some(stackaddr) = get_stack_start_aligned() {
-                 // Remove the protection on the guard page.
-                 // FIXME: we cannot unmap the page, because when we mmap()
