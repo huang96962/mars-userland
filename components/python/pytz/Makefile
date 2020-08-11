@@ -36,7 +36,7 @@ COMPONENT_ARCHIVE_URL=	https://pypi.python.org/packages/5d/8e/6635d8f3f9f48c03bb
 COMPONENT_PROJECT_URL=	http://pytz.sourceforge.net/
 COMPONENT_BUGDB=	python-mod/pytz
 
-PYTHON_VERSIONS=	2.7 3.4 3.5
+PYTHON_VERSIONS=	3.5
 
 include $(WS_MAKE_RULES)/prep.mk
 include $(WS_MAKE_RULES)/setup.py.mk

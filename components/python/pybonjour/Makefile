@@ -32,7 +32,7 @@ COMPONENT_ARCHIVE_HASH=	\
     sha256:006175b0fa6ef555fe8970132db81332827662a680d5f64dcb005bfcc80299ad
 COMPONENT_ARCHIVE_URL=	https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/pybonjour/$(COMPONENT_ARCHIVE)
 
-PYTHON_VERSIONS=	2.7 3.4 3.5
+PYTHON_VERSIONS=	3.5
 
 include $(WS_TOP)/make-rules/prep.mk
 include $(WS_TOP)/make-rules/setup.py.mk

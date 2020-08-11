@@ -43,6 +43,7 @@ include $(WS_MAKE_RULES)/common.mk
 
 # Use ssh (rather than rsh) for remote commands.
 CONFIGURE_ENV += "RSH=/usr/bin/ssh"
+CONFIGURE_ENV += "FORCE_UNSAFE_CONFIGURE=1"
 
 CONFIGURE_OPTIONS +=	--with-rmt=/usr/sbin/rmt
 CONFIGURE_OPTIONS +=	--libexecdir=/usr/sbin

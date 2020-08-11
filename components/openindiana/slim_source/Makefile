@@ -33,6 +33,7 @@ PKG_REPO=$(SOURCE_DIR)/packages/$(MACH)/nightly-nd/repo.redist
 
 CLEAN_PATHS += $(BUILD_DIR)
 
+COMPONENT_PREP_GIT=no
 include $(WS_MAKE_RULES)/prep.mk
 
 $(SOURCE_DIR)/.downloaded: $(ARCHIVES:%=$(USERLAND_ARCHIVES)%)
@@ -113,19 +114,19 @@ publish: update $(BUILD_DIR)/$(MACH)/.published
 PACKAGE_NAMES  = consolidation/install/install-incorporation
 PACKAGE_NAMES += consolidation/install/install-redistributable
 PACKAGE_NAMES += install/distribution-constructor
-#PACKAGE_NAMES += install/installadm
-#PACKAGE_NAMES += SUNWauto-install-common
-#PACKAGE_NAMES += SUNWauto-install
+PACKAGE_NAMES += install/installadm
+PACKAGE_NAMES += SUNWauto-install-common
+PACKAGE_NAMES += SUNWauto-install
 PACKAGE_NAMES += SUNWdistro-const
 PACKAGE_NAMES += SUNWgui-install
 PACKAGE_NAMES += SUNWinstall-libs
 PACKAGE_NAMES += SUNWinstall-test
 PACKAGE_NAMES += SUNWinstall
-#PACKAGE_NAMES += SUNWinstalladm-tools
+PACKAGE_NAMES += SUNWinstalladm-tools
 PACKAGE_NAMES += SUNWslim-utils
 PACKAGE_NAMES += system/install
-#PACKAGE_NAMES += system/install/auto-install
-#PACKAGE_NAMES += system/install/auto-install/auto-install-common
+PACKAGE_NAMES += system/install/auto-install
+PACKAGE_NAMES += system/install/auto-install/auto-install-common
 PACKAGE_NAMES += system/install/gui-install
 PACKAGE_NAMES += system/install/media/internal
 PACKAGE_NAMES += system/install/tests

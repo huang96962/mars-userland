@@ -38,7 +38,7 @@ COMPONENT_BUGDB=	python-mod/ply
 
 TPNO=			28341
 
-PYTHON_VERSIONS=	2.7 3.4 3.5
+PYTHON_VERSIONS=	3.5
 
 include $(WS_MAKE_RULES)/prep.mk
 include $(WS_MAKE_RULES)/setup.py.mk
