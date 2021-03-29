@@ -1,0 +1,10 @@
+{
+    "dependencies": [
+        "SUNWcs"
+    ],
+    "fmris": [
+        "library/python/ipaddress-27",
+        "library/python/ipaddress"
+    ],
+    "name": "ipaddress"
+}

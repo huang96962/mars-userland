@@ -1,0 +1,11 @@
+{
+    "dependencies": [
+        "SUNWcs",
+        "runtime/python-35"
+    ],
+    "fmris": [
+        "library/python/zc.lockfile-35",
+        "library/python/zc.lockfile"
+    ],
+    "name": "zc.lockfile"
+}

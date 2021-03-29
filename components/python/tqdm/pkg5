@@ -1,0 +1,12 @@
+{
+    "dependencies": [
+        "SUNWcs",
+        "library/python/setuptools-35",
+        "runtime/python-35"
+    ],
+    "fmris": [
+        "library/python/tqdm-35",
+        "library/python/tqdm"
+    ],
+    "name": "tqdm"
+}

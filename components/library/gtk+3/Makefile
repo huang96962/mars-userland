@@ -12,6 +12,7 @@
 #
 # Copyright 2017 Alexander Pyhalov
 # Copyright 2019 Michal Nowak
+# Copyright 2020 Marco van Wieringen
 #
 
 BUILD_BITS=		32_and_64
@@ -26,7 +27,7 @@ COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH= \
 	sha256:1384eba5614fed160044ae0d32369e3df7b4f517b03f4b1f24d383e528f4be83
 COMPONENT_ARCHIVE_URL= \
-	http://ftp.gnome.org/pub/GNOME/sources/$(COMPONENT_NAME)/3.24/$(COMPONENT_ARCHIVE)
+	https://ftp.gnome.org/pub/GNOME/sources/$(COMPONENT_NAME)/3.24/$(COMPONENT_ARCHIVE)
 COMPONENT_PROJECT_URL=	https://www.gtk.org/
 COMPONENT_LICENSE=	LGPLv2
 COMPONENT_LICENSE_FILE=	COPYING
@@ -35,7 +36,7 @@ COMPONENT_FMRI=		library/desktop/gtk3
 
 include $(WS_MAKE_RULES)/common.mk
 
-PATH=/usr/gnu/bin:/usr/bin
+PATH=$(PATH.gnu)
 
 CFLAGS += -I/usr/X11/include
 
@@ -62,7 +63,7 @@ CONFIGURE_OPTIONS.32 = --sysconfdir=/etc
 CONFIGURE_OPTIONS.64 = --sysconfdir=/etc/$(MACH64)
 CONFIGURE_OPTIONS += --enable-explicit-deps=yes
 CONFIGURE_OPTIONS += --enable-cloudprint
-CONFIGURE_OPTIONS += --enable-introspection
+CONFIGURE_OPTIONS.64 += --enable-introspection
 CONFIGURE_OPTIONS += --enable-man
 CONFIGURE_OPTIONS += --disable-glibtest
 CONFIGURE_OPTIONS += --disable-papi

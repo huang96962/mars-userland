@@ -40,8 +40,8 @@ link path=usr/lib/libevent_extra-2.0.so target=libevent_extra-2.0.so.5
 link path=usr/lib/libevent_openssl-2.0.so target=libevent_openssl-2.0.so.5
 link path=usr/lib/libevent_pthreads-2.0.so target=libevent_pthreads-2.0.so.5
 
-file path=usr/bin/$(MACH64)/event_rpcgen.py
-file path=usr/bin/event_rpcgen.py
+#file path=usr/bin/$(MACH64)/event_rpcgen.py
+#file path=usr/bin/event_rpcgen.py
 file path=usr/include/libevent2/evdns.h
 file path=usr/include/libevent2/event.h
 file path=usr/include/libevent2/event2/buffer.h

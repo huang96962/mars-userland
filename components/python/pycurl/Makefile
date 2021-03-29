@@ -28,6 +28,7 @@ include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		pycurl
 COMPONENT_VERSION=	7.43.0.2
+COMPONENT_REVISION=	2
 COMPONENT_PROJECT_URL=	http://pycurl.sourceforge.net/
 COMPONENT_SRC=		$(COMPONENT_NAME)-$(COMPONENT_VERSION)
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.gz
@@ -60,14 +61,12 @@ test:		$(TEST_32_and_64)
 
 # Test suite dependency
 REQUIRED_PACKAGES += library/python/nose
-REQUIRED_PACKAGES += library/python/nose-27
-REQUIRED_PACKAGES += library/python/nose-34
+#REQUIRED_PACKAGES += library/python/nose-27
 REQUIRED_PACKAGES += library/python/nose-35
 
 # Auto-generated dependencies
 REQUIRED_PACKAGES += library/security/openssl
-REQUIRED_PACKAGES += runtime/python-27
-REQUIRED_PACKAGES += runtime/python-34
+#REQUIRED_PACKAGES += runtime/python-27
 REQUIRED_PACKAGES += runtime/python-35
 REQUIRED_PACKAGES += system/library
 REQUIRED_PACKAGES += web/curl

@@ -10,15 +10,16 @@
 
 #
 # Copyright 2019 Michal Nowak
+# Copyright 2020 Nona Hansel
 #
 
 BUILD_BITS=		64_and_32
 BUILD_STYLE=		cmake
-
+PREFERRED_BITS=		64
 include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		zstd
-COMPONENT_VERSION=	1.4.4
+COMPONENT_VERSION=	1.4.9
 COMPONENT_SUMMARY=	Zstandard, or zstd for short, is a fast lossless compression algorithm, targeting real-time compression scenarios
 COMPONENT_PROJECT_URL=	https://facebook.github.io/zstd/
 COMPONENT_FMRI=		compress/zstd
@@ -26,9 +27,8 @@ COMPONENT_CLASSIFICATION=	Applications/System Utilities
 COMPONENT_SRC=		$(COMPONENT_NAME)-$(COMPONENT_VERSION)
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.gz
 COMPONENT_ARCHIVE_URL=	https://github.com/facebook/zstd/releases/download/v$(COMPONENT_VERSION)/$(COMPONENT_ARCHIVE)
-COMPONENT_ARCHIVE_HASH=	sha256:59ef70ebb757ffe74a7b3fe9c305e2ba3350021a918d168a046c6300aeea9315
+COMPONENT_ARCHIVE_HASH=	sha256:29ac74e19ea28659017361976240c4b5c5c24db3b89338731a6feb97c038d293
 COMPONENT_LICENSE=	BSD,GPLv2.0
-COMPONENT_LICENSE_FILE=	$(COMPONENT_NAME).license
 
 include $(WS_MAKE_RULES)/common.mk
 

@@ -14,30 +14,26 @@
 #
 
 X11_CATEGORY=LIB
+BUILD_STYLE=meson
 include ../../../make-rules/shared-macros.mk
 include $(WS_MAKE_RULES)/x11.mk
 
 COMPONENT_NAME=    libepoxy
-COMPONENT_VERSION= 1.5.2
+COMPONENT_VERSION= 1.5.5
 COMPONENT_FMRI=	   x11/library/libepoxy
 COMPONENT_SUMMARY= library for handling OpenGL function pointers
 COMPONENT_CLASSIFICATION=System/Hardware
 COMPONENT_ARCHIVE= $(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH=	\
-    sha256:a9562386519eb3fd7f03209f279f697a8cba520d3c155d6e253c3e138beca7d8
+	sha256:261663db21bcc1cc232b07ea683252ee6992982276536924271535875f5b0556
 COMPONENT_ARCHIVE_URL=	\
     https://github.com/anholt/libepoxy/releases/download/$(COMPONENT_VERSION)/$(COMPONENT_ARCHIVE)
 
 include $(WS_MAKE_RULES)/common.mk
 
-# Missing files in build dir for configure without this.
-COMPONENT_PREP_ACTION = (cd $(@D) && \
-                         libtoolize --automake --copy --force && \
-                         aclocal -Im4 && \
-                         autoheader && \
-                         automake -a -f -c && \
-                         autoconf )
+#CONFIGURE_OPTIONS += -Degl=no
 
-CONFIGURE_ENV.32 += CPPFLAGS="$(CPP_LARGEFILES.32)"
+#CONFIGURE_ENV.32 += CPPFLAGS="$(CPP_LARGEFILES.32)"
 
+# Auto-generated dependencies
 REQUIRED_PACKAGES += system/library

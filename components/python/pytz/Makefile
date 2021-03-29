@@ -23,24 +23,22 @@
 # Copyright (c) 2012, 2016, Oracle and/or its affiliates. All rights reserved.
 #
 
+BUILD_BITS=NO_ARCH
+BUILD_STYLE=setup.py
 include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		pytz
-COMPONENT_VERSION=	2016.6.1
-COMPONENT_REVISION=	1
+COMPONENT_VERSION=	2020.5
 COMPONENT_SRC=		$(COMPONENT_NAME)-$(COMPONENT_VERSION)
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.gz
 COMPONENT_ARCHIVE_HASH=	\
-    sha256:6f57732f0f8849817e9853eb9d50d85d1ebb1404f702dbc44ee627c642a486ca
-COMPONENT_ARCHIVE_URL=	https://pypi.python.org/packages/5d/8e/6635d8f3f9f48c03bb925fab543383089858271f9cfd1216b83247e8df94/$(COMPONENT_ARCHIVE)
+    sha256:180befebb1927b16f6b57101720075a984c019ac16b1b7575673bea42c6c3da5
+COMPONENT_ARCHIVE_URL=	$(call pypi_url)
 COMPONENT_PROJECT_URL=	http://pytz.sourceforge.net/
-COMPONENT_BUGDB=	python-mod/pytz
 
-PYTHON_VERSIONS=	3.5
+PYTHON_VERSIONS=	$(PYTHON3_VERSION)
 
-include $(WS_MAKE_RULES)/prep.mk
-include $(WS_MAKE_RULES)/setup.py.mk
-include $(WS_MAKE_RULES)/ips.mk
+include $(WS_MAKE_RULES)/common.mk
 
 ASLR_MODE = $(ASLR_NOT_APPLICABLE)
 
@@ -49,14 +47,9 @@ COMPONENT_TEST_CMD=	/bin/sh
 COMPONENT_TEST_DIR=	$(SOURCE_DIR)
 COMPONENT_TEST_ENV+=	PYTHON=$(PYTHON)
 
-# common targets
-build:		$(BUILD_NO_ARCH)
-
-install:	$(INSTALL_NO_ARCH)
-
-test:		$(TEST_NO_ARCH)
 
 # Auto-generated dependencies
-REQUIRED_PACKAGES += runtime/python-27
-REQUIRED_PACKAGES += runtime/python-34
+#REQUIRED_PACKAGES += runtime/python-27
 REQUIRED_PACKAGES += runtime/python-35
+#REQUIRED_PACKAGES += runtime/python-37
+#REQUIRED_PACKAGES += runtime/python-39

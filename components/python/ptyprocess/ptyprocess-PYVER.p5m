@@ -27,3 +27,7 @@ file path=usr/lib/python$(PYVER)/vendor-packages/ptyprocess/__init__.py
 file path=usr/lib/python$(PYVER)/vendor-packages/ptyprocess/_fork_pty.py
 file path=usr/lib/python$(PYVER)/vendor-packages/ptyprocess/ptyprocess.py
 file path=usr/lib/python$(PYVER)/vendor-packages/ptyprocess/util.py
+
+# force a dependency on the Python runtime
+depend type=require fmri=__TBD pkg.debug.depend.file=python$(PYVER) \
+    pkg.debug.depend.path=usr/bin

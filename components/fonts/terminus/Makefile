@@ -13,18 +13,18 @@
 # Copyright 2016 Josef 'Jeff' Sipek <jeffpc@josefsipek.net>
 # Copyright 2019 Michal Nowak
 #
-
+BUILD_BITS=			32
 include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		terminus-font
-COMPONENT_VERSION=	4.47
+COMPONENT_VERSION=	4.49
 COMPONENT_PROJECT_URL=	https://terminus-font.sourceforge.net/
 COMPONENT_SUMMARY=	Terminus Font
 COMPONENT_SRC=		$(COMPONENT_NAME)-$(COMPONENT_VERSION)
-COMPONENT_ARCHIVE=      $(COMPONENT_SRC).tar.gz
+COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.gz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:0f1b205888e4e26a94878f746b8566a65c3e3742b33cf9a4e6517646d5651297
-COMPONENT_ARCHIVE_URL=	http://sourceforge.net/projects/terminus-font/files/$(COMPONENT_SRC)/$(COMPONENT_ARCHIVE)/download
+	sha256:db0a74551a23d2229db6ffea469ca8e390625ace4069dd1c1a3d05a16ed2634d
+COMPONENT_ARCHIVE_URL=	https://sourceforge.net/projects/terminus-font/files/$(COMPONENT_SRC)/$(COMPONENT_ARCHIVE)/download
 COMPONENT_FMRI=		system/font/terminus
 COMPONENT_LICENSE_FILE=	terminus.license
 COMPONENT_LICENSE=	OFL
@@ -32,9 +32,8 @@ COMPONENT_CLASSIFICATION=	System/Fonts
 
 CONFIGURE_DEFAULT_DIRS=	no
 
-include $(WS_TOP)/make-rules/prep.mk
-include $(WS_TOP)/make-rules/configure.mk
-include $(WS_TOP)/make-rules/ips.mk
+TEST_TARGET=		$(NO_TESTS)
+include $(WS_MAKE_RULES)/common.mk
 
 CONFIGURE_OPTIONS =  --prefix=$(CONFIGURE_PREFIX)
 CONFIGURE_OPTIONS += --x11dir=$(CONFIGURE_PREFIX)/share/fonts/X11/terminus
@@ -43,12 +42,6 @@ COMPONENT_BUILD_TARGETS = pcf
 COMPONENT_INSTALL_TARGETS = install-pcf
 
 COMPONENT_PRE_CONFIGURE_ACTION=$(CLONEY) $(SOURCE_DIR) $(@D)
-
-build:		$(BUILD_32)
-
-install:	$(INSTALL_32)
-
-test:		$(NO_TESTS)
 
 # Build dependencies
 REQUIRED_PACKAGES+= x11/bdftopcf

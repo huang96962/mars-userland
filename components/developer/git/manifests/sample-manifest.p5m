@@ -10,7 +10,7 @@
 #
 
 #
-# Copyright 2018 <contributor>
+# Copyright 2020 <contributor>
 #
 
 set name=pkg.fmri value=pkg:/$(COMPONENT_FMRI)@$(IPS_COMPONENT_VERSION),$(BUILD_VERSION)
@@ -42,6 +42,7 @@ file path=usr/lib/git-core/git-bisect
 hardlink path=usr/lib/git-core/git-bisect--helper target=git-upload-pack
 hardlink path=usr/lib/git-core/git-blame target=git-upload-pack
 hardlink path=usr/lib/git-core/git-branch target=git-upload-pack
+hardlink path=usr/lib/git-core/git-bugreport target=git-upload-pack
 hardlink path=usr/lib/git-core/git-bundle target=git-upload-pack
 hardlink path=usr/lib/git-core/git-cat-file target=git-upload-pack
 hardlink path=usr/lib/git-core/git-check-attr target=git-upload-pack
@@ -62,9 +63,10 @@ hardlink path=usr/lib/git-core/git-commit-tree target=git-upload-pack
 hardlink path=usr/lib/git-core/git-config target=git-upload-pack
 hardlink path=usr/lib/git-core/git-count-objects target=git-upload-pack
 hardlink path=usr/lib/git-core/git-credential target=git-upload-pack
-file path=usr/lib/git-core/git-credential-cache
-file path=usr/lib/git-core/git-credential-cache--daemon
-file path=usr/lib/git-core/git-credential-store
+hardlink path=usr/lib/git-core/git-credential-cache target=git-upload-pack
+hardlink path=usr/lib/git-core/git-credential-cache--daemon \
+    target=git-upload-pack
+hardlink path=usr/lib/git-core/git-credential-store target=git-upload-pack
 file path=usr/lib/git-core/git-cvsexportcommit
 file path=usr/lib/git-core/git-cvsimport
 file path=usr/lib/git-core/git-cvsserver
@@ -78,12 +80,13 @@ hardlink path=usr/lib/git-core/git-difftool target=git-upload-pack
 file path=usr/lib/git-core/git-difftool--helper
 hardlink path=usr/lib/git-core/git-env--helper target=git-upload-pack
 hardlink path=usr/lib/git-core/git-fast-export target=git-upload-pack
-file path=usr/lib/git-core/git-fast-import
+hardlink path=usr/lib/git-core/git-fast-import target=git-upload-pack
 hardlink path=usr/lib/git-core/git-fetch target=git-upload-pack
 hardlink path=usr/lib/git-core/git-fetch-pack target=git-upload-pack
 file path=usr/lib/git-core/git-filter-branch
 hardlink path=usr/lib/git-core/git-fmt-merge-msg target=git-upload-pack
 hardlink path=usr/lib/git-core/git-for-each-ref target=git-upload-pack
+hardlink path=usr/lib/git-core/git-for-each-repo target=git-upload-pack
 hardlink path=usr/lib/git-core/git-format-patch target=git-upload-pack
 hardlink path=usr/lib/git-core/git-fsck target=git-upload-pack
 hardlink path=usr/lib/git-core/git-fsck-objects target=git-upload-pack
@@ -103,13 +106,13 @@ hardlink path=usr/lib/git-core/git-init target=git-upload-pack
 hardlink path=usr/lib/git-core/git-init-db target=git-upload-pack
 file path=usr/lib/git-core/git-instaweb
 hardlink path=usr/lib/git-core/git-interpret-trailers target=git-upload-pack
-file path=usr/lib/git-core/git-legacy-stash
 hardlink path=usr/lib/git-core/git-log target=git-upload-pack
 hardlink path=usr/lib/git-core/git-ls-files target=git-upload-pack
 hardlink path=usr/lib/git-core/git-ls-remote target=git-upload-pack
 hardlink path=usr/lib/git-core/git-ls-tree target=git-upload-pack
 hardlink path=usr/lib/git-core/git-mailinfo target=git-upload-pack
 hardlink path=usr/lib/git-core/git-mailsplit target=git-upload-pack
+hardlink path=usr/lib/git-core/git-maintenance target=git-upload-pack
 hardlink path=usr/lib/git-core/git-merge target=git-upload-pack
 hardlink path=usr/lib/git-core/git-merge-base target=git-upload-pack
 hardlink path=usr/lib/git-core/git-merge-file target=git-upload-pack
@@ -133,7 +136,6 @@ file path=usr/lib/git-core/git-p4
 hardlink path=usr/lib/git-core/git-pack-objects target=git-upload-pack
 hardlink path=usr/lib/git-core/git-pack-redundant target=git-upload-pack
 hardlink path=usr/lib/git-core/git-pack-refs target=git-upload-pack
-file path=usr/lib/git-core/git-parse-remote
 hardlink path=usr/lib/git-core/git-patch-id target=git-upload-pack
 hardlink path=usr/lib/git-core/git-prune target=git-upload-pack
 hardlink path=usr/lib/git-core/git-prune-packed target=git-upload-pack
@@ -153,7 +155,6 @@ hardlink path=usr/lib/git-core/git-remote-ftp target=git-remote-ftps
 file path=usr/lib/git-core/git-remote-ftps
 hardlink path=usr/lib/git-core/git-remote-http target=git-remote-ftps
 hardlink path=usr/lib/git-core/git-remote-https target=git-remote-ftps
-file path=usr/lib/git-core/git-remote-testsvn
 hardlink path=usr/lib/git-core/git-repack target=git-upload-pack
 hardlink path=usr/lib/git-core/git-replace target=git-upload-pack
 file path=usr/lib/git-core/git-request-pull
@@ -203,7 +204,6 @@ hardlink path=usr/lib/git-core/git-worktree target=git-upload-pack
 hardlink path=usr/lib/git-core/git-write-tree target=git-upload-pack
 file path=usr/lib/git-core/mergetools/araxis
 file path=usr/lib/git-core/mergetools/bc
-file path=usr/lib/git-core/mergetools/bc3
 file path=usr/lib/git-core/mergetools/codecompare
 file path=usr/lib/git-core/mergetools/deltawalker
 file path=usr/lib/git-core/mergetools/diffmerge
@@ -213,19 +213,16 @@ file path=usr/lib/git-core/mergetools/emerge
 file path=usr/lib/git-core/mergetools/examdiff
 file path=usr/lib/git-core/mergetools/guiffy
 file path=usr/lib/git-core/mergetools/gvimdiff
-file path=usr/lib/git-core/mergetools/gvimdiff2
-file path=usr/lib/git-core/mergetools/gvimdiff3
 file path=usr/lib/git-core/mergetools/kdiff3
 file path=usr/lib/git-core/mergetools/kompare
 file path=usr/lib/git-core/mergetools/meld
+file path=usr/lib/git-core/mergetools/nvimdiff
 file path=usr/lib/git-core/mergetools/opendiff
 file path=usr/lib/git-core/mergetools/p4merge
 file path=usr/lib/git-core/mergetools/smerge
 file path=usr/lib/git-core/mergetools/tkdiff
 file path=usr/lib/git-core/mergetools/tortoisemerge
 file path=usr/lib/git-core/mergetools/vimdiff
-file path=usr/lib/git-core/mergetools/vimdiff2
-file path=usr/lib/git-core/mergetools/vimdiff3
 file path=usr/lib/git-core/mergetools/winmerge
 file path=usr/lib/git-core/mergetools/xxdiff
 file path=usr/perl5/vendor_perl/5.22/i86pc-solaris-64int/FromCPAN/Error.pm
@@ -261,6 +258,7 @@ file path=usr/share/git-core/templates/hooks/pre-push.sample
 file path=usr/share/git-core/templates/hooks/pre-rebase.sample
 file path=usr/share/git-core/templates/hooks/pre-receive.sample
 file path=usr/share/git-core/templates/hooks/prepare-commit-msg.sample
+file path=usr/share/git-core/templates/hooks/push-to-checkout.sample
 file path=usr/share/git-core/templates/hooks/update.sample
 file path=usr/share/git-core/templates/info/exclude
 file path=usr/share/git-gui/lib/about.tcl
@@ -348,9 +346,11 @@ file path=usr/share/locale/fr/LC_MESSAGES/git.mo
 file path=usr/share/locale/is/LC_MESSAGES/git.mo
 file path=usr/share/locale/it/LC_MESSAGES/git.mo
 file path=usr/share/locale/ko/LC_MESSAGES/git.mo
+file path=usr/share/locale/pl/LC_MESSAGES/git.mo
 file path=usr/share/locale/pt_PT/LC_MESSAGES/git.mo
 file path=usr/share/locale/ru/LC_MESSAGES/git.mo
 file path=usr/share/locale/sv/LC_MESSAGES/git.mo
+file path=usr/share/locale/tr/LC_MESSAGES/git.mo
 file path=usr/share/locale/vi/LC_MESSAGES/git.mo
 file path=usr/share/locale/zh_CN/LC_MESSAGES/git.mo
 file path=usr/share/locale/zh_TW/LC_MESSAGES/git.mo
@@ -363,6 +363,7 @@ file path=usr/share/man/man1/git-archive.1
 file path=usr/share/man/man1/git-bisect.1
 file path=usr/share/man/man1/git-blame.1
 file path=usr/share/man/man1/git-branch.1
+file path=usr/share/man/man1/git-bugreport.1
 file path=usr/share/man/man1/git-bundle.1
 file path=usr/share/man/man1/git-cat-file.1
 file path=usr/share/man/man1/git-check-attr.1
@@ -403,6 +404,7 @@ file path=usr/share/man/man1/git-fetch.1
 file path=usr/share/man/man1/git-filter-branch.1
 file path=usr/share/man/man1/git-fmt-merge-msg.1
 file path=usr/share/man/man1/git-for-each-ref.1
+file path=usr/share/man/man1/git-for-each-repo.1
 file path=usr/share/man/man1/git-format-patch.1
 file path=usr/share/man/man1/git-fsck-objects.1
 file path=usr/share/man/man1/git-fsck.1
@@ -427,6 +429,7 @@ file path=usr/share/man/man1/git-ls-remote.1
 file path=usr/share/man/man1/git-ls-tree.1
 file path=usr/share/man/man1/git-mailinfo.1
 file path=usr/share/man/man1/git-mailsplit.1
+file path=usr/share/man/man1/git-maintenance.1
 file path=usr/share/man/man1/git-merge-base.1
 file path=usr/share/man/man1/git-merge-file.1
 file path=usr/share/man/man1/git-merge-index.1
@@ -445,7 +448,6 @@ file path=usr/share/man/man1/git-p4.1
 file path=usr/share/man/man1/git-pack-objects.1
 file path=usr/share/man/man1/git-pack-redundant.1
 file path=usr/share/man/man1/git-pack-refs.1
-file path=usr/share/man/man1/git-parse-remote.1
 file path=usr/share/man/man1/git-patch-id.1
 file path=usr/share/man/man1/git-prune-packed.1
 file path=usr/share/man/man1/git-prune.1
@@ -521,6 +523,7 @@ file path=usr/share/man/man5/gitcredentials.5
 file path=usr/share/man/man5/gitcvs-migration.5
 file path=usr/share/man/man5/gitdiffcore.5
 file path=usr/share/man/man5/giteveryday.5
+file path=usr/share/man/man5/gitfaq.5
 file path=usr/share/man/man5/gitglossary.5
 file path=usr/share/man/man5/gitnamespaces.5
 file path=usr/share/man/man5/gitremote-helpers.5

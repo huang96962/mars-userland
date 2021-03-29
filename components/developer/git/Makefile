@@ -22,6 +22,7 @@
 #
 # Copyright (c) 2011, 2012, Oracle and/or its affiliates. All rights reserved.
 # Copyright (c) 2020, Michal Nowak
+# Copyright (c) 2021, Nona Hansel
 #
 
 BUILD_BITS=		64
@@ -29,14 +30,14 @@ BUILD_BITS=		64
 include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		git
-COMPONENT_VERSION=	2.25.4
+COMPONENT_VERSION=	2.30.1
 COMPONENT_SUMMARY=	git - Fast Version Control System
 COMPONENT_PROJECT_URL=	https://git-scm.com/
 COMPONENT_FMRI=		developer/versioning/git
 COMPONENT_CLASSIFICATION=	Development/Source Code Management
 COMPONENT_SRC=		$(COMPONENT_NAME)-$(COMPONENT_VERSION)
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
-COMPONENT_ARCHIVE_HASH=	sha256:b8b7fb79f129cb1789d1ec69ff0cc60b3efaa1ac9a045328f5c1566e88365585
+COMPONENT_ARCHIVE_HASH=	sha256:f988a8a095089978dab2932af4edb22b4d7d67d67b81aaa1986fa29ef45d9467
 COMPONENT_ARCHIVE_URL=	https://www.kernel.org/pub/software/scm/git/$(COMPONENT_ARCHIVE)
 COMPONENT_LICENSE=	GPLv2
 COMPONENT_DESCRIPTION=	Git is a free & open source, distributed version control system designed to handle everything from small to very large projects with speed and efficiency.
@@ -45,10 +46,14 @@ COMPONENT_DESCRIPTION=	Git is a free & open source, distributed version control 
 # man pages are a separate archive
 #
 COMPONENT_ARCHIVE_1=		$(COMPONENT_NAME)-manpages-$(COMPONENT_VERSION).tar.xz
-COMPONENT_ARCHIVE_HASH_1=	sha256:df8c25a36b7283feb8dfa9242dbd1b770d28f8e26aa52fe109bc195f91d685a5
+COMPONENT_ARCHIVE_HASH_1=	sha256:30fc7ecbd964bb19a2ca1a695fe7af430740e09bd1c134cd3730783abec5b904
 COMPONENT_ARCHIVE_URL_1=	https://www.kernel.org/pub/software/scm/git/$(COMPONENT_ARCHIVE_1)
 
+PYTHON_VERSION=	3.9
 include $(WS_MAKE_RULES)/common.mk
+
+# With PATH.gnu gmake test stalls at t6030, so don't use it!
+#PATH = $(PATH.gnu)
 
 LDFLAGS += -lnsl -lsocket
 
@@ -63,6 +68,12 @@ CONFIGURE_OPTIONS  +=	CPPFLAGS="-I/usr/include/pcre"
 COMPONENT_BUILD_ENV+=	NO_PERL_MAKEMAKER=1
 COMPONENT_BUILD_ENV+=	V=1
 COMPONENT_INSTALL_ENV+=	NO_PERL_MAKEMAKER=1
+
+#
+# perl's install path for sparc is based off the value of the
+# "arch" command.  So we must package that way also.
+#
+PKG_MACROS +=		P_ARCH=$(shell arch)
 
 # This runs configure but configure doesn't generate a Makefile.
 # Instead a Makefile comes with git.
@@ -89,6 +100,9 @@ COMPONENT_INSTALL_ARGS+=        perllibdir=$(shell $(PERL) -MConfig -e 'print "$
 COMPONENT_INSTALL_ARGS+=        VENDORPREFIX=$(shell $(PERL) -MConfig -e 'print "$$Config{installvendorlib}"')
 COMPONENT_INSTALL_ARGS+=        PERLPREFIX=$(shell $(PERL) -MConfig -e 'print "$$Config{installvendorarch}"')
 COMPONENT_INSTALL_ARGS+=        INSTALLVENDORLIB=$(shell $(PERL) -MConfig -e 'print "$$Config{installvendorlib}"')
+
+COMPONENT_TEST_ENV += PATH=$(PATH.gnu)
+COMPONENT_TEST_ENV += LC_ALL=C.UTF-8
 
 # many failures; keep going; later versions of git are much cleaner
 COMPONENT_TEST_ARGS += -k -i
@@ -143,21 +157,24 @@ COMPONENT_TEST_ENV += PATH=$(PATH.gnu)
 install:	$(INSTALL_64) $(BUILD_DIR)/.manpages $(BUILD_DIR_64)/.contrib
 
 # Test dependencies
+REQUIRED_PACKAGES += developer/fakeroot
+REQUIRED_PACKAGES += developer/versioning/cvs
 REQUIRED_PACKAGES += system/library/iconv/extra
 REQUIRED_PACKAGES += system/library/iconv/unicode
 REQUIRED_PACKAGES += system/library/iconv/utf-8
+REQUIRED_PACKAGES += library/perl-5/database
 REQUIRED_PACKAGES += library/perl-5/sqlite-dbi
 REQUIRED_PACKAGES += library/perl-5/subversion
 REQUIRED_PACKAGES += locale/is
 REQUIRED_PACKAGES += locale/is-extra
 
 # Auto-generated dependencies
+REQUIRED_PACKAGES += SUNWcs
 REQUIRED_PACKAGES += library/expat
 REQUIRED_PACKAGES += library/pcre2
 REQUIRED_PACKAGES += library/zlib
 REQUIRED_PACKAGES += runtime/perl-522
-REQUIRED_PACKAGES += runtime/python-27
+REQUIRED_PACKAGES += runtime/python-39
 REQUIRED_PACKAGES += shell/bash
-REQUIRED_PACKAGES += SUNWcs
 REQUIRED_PACKAGES += system/library
 REQUIRED_PACKAGES += web/curl

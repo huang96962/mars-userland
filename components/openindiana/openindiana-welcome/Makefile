@@ -37,8 +37,12 @@ PATH=$(PATH.gnu)
 
 PYTHON_VERSION=3.5
 
+COMPONENT_PREP_GIT=no
 include $(WS_TOP)/make-rules/prep.mk
 include $(WS_TOP)/make-rules/configure.mk
+
+# Make sure the binaries will be in /usr/bin instead of /usr/bin/$(MACH64):
+CONFIGURE_BINDIR.64 = $(CONFIGURE_BINDIR.32)
 
 CONFIGURE_ENV += PYTHON=$(PYTHON)
 
@@ -74,9 +78,9 @@ $(SOURCE_DIR)/.prep: $(SOURCE_DIR)/.downloaded Makefile
 		autoconf -f
 	touch $(SOURCE_DIR)/.prep
 
-build: $(BUILD_32)
+build: $(BUILD_64)
 
-install: $(INSTALL_32)
+install: $(INSTALL_64)
 
 download:: $(SOURCE_DIR)/.downloaded
 

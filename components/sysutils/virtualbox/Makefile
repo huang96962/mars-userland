@@ -12,12 +12,14 @@
 # Copyright 2017 Aurelien Larcher
 # Copyright 2020 Michal Nowak
 # Copyright 2019 Tim Mooney
+# Copyright 2020 Jim Klimov
 #
 
 include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=         VirtualBox
-COMPONENT_VERSION=      6.1.16
+COMPONENT_VERSION=      6.1.18
+COMPONENT_REVISION=      1
 COMPONENT_SUMMARY=      VirtualBox - general-purpose full virtualizer
 COMPONENT_PROJECT_URL=  https://www.virtualbox.org/
 COMPONENT_FMRI=         system/virtualbox
@@ -28,16 +30,16 @@ COMPONENT_DOWNLOAD_URL= \
 	https://download.virtualbox.org/virtualbox/$(COMPONENT_VERSION)
 COMPONENT_ARCHIVE_URL=  $(COMPONENT_DOWNLOAD_URL)/$(COMPONENT_ARCHIVE)
 COMPONENT_ARCHIVE_HASH= \
-	sha256:49c1990da16d8a3d5bda8cdb961ec8195a901e67e4c79aea44c1521a5fc2f9f1
+	sha256:108d42b9b391b7a332a33df1662cf7b0e9d9a80f3079d16288d8b9487f427d40	
 COMPONENT_LICENSE=      GPLv2
 
 COMPONENT_NAME_1=       VirtualBoxSDK
-COMPONENT_VERSION_1=    $(COMPONENT_VERSION)-140961
+COMPONENT_VERSION_1=    $(COMPONENT_VERSION)-142142
 COMPONENT_SRC_1=        $(COMPONENT_NAME_1)-$(COMPONENT_VERSION_1)
 COMPONENT_ARCHIVE_1=    $(COMPONENT_SRC_1).zip
 COMPONENT_ARCHIVE_URL_1=$(COMPONENT_DOWNLOAD_URL)/$(COMPONENT_ARCHIVE_1)
 COMPONENT_ARCHIVE_HASH_1= \
-	sha256:0dc5a55fbf40e5120008a4148df1e9312bf0aa974cfb96f49e2947e20d408d47
+	sha256:49f8396e2a3295682f36250df91f4ffd64696cbc661ad03e8e3726459ac49b7f
 COMPONENT_LICENSE_1=      GPLv2
 
 UNPACK_ARGS_1=		-r $(COMPONENT_SRC_1)
@@ -69,6 +71,7 @@ VBOX_FS_MODULES= vboxfs
 VBOX_BINS= VBoxControl VBoxService VBoxClient
 VBOX_SBINS= vboxmslnk
 
+#QT5_ROOT=/usr/lib/qt/5.12
 QT5_ROOT=/usr/lib/qt/5.8
 PATH=$(PATH.gnu):$(QT5_ROOT)/bin/$(MACH64)
 PKG_CONFIG_PATH=$(PKG_CONFIG_PATH.$(BITS)):$(QT5_ROOT)/lib/$(MACH64)/pkgconfig
@@ -196,10 +199,10 @@ $(INSTALL_ADDITIONS):	$(INSTALL_64)
 	done
 	for fl in $(VBOX_BINS); do \
 		cp $(VBOX_BINDIR)/$$fl $(PROTO_DIR)/usr/bin; \
-	done
+		done
 	for fl in $(VBOX_SBINS); do \
 		cp $(VBOX_BINDIR)/$$fl $(PROTO_DIR)/usr/sbin; \
-	done
+		done
 	cp $(VBOX_BINDIR)/1099.vboxclient $(PROTO_DIR)/usr/bin/VBoxClient-all
 	$(MKDIR) $(PROTO_DIR)/usr/lib/$(MACH64)
 	$(MKDIR) $(PROTO_DIR)/var/svc/manifest/application/virtualbox

@@ -1,0 +1,14 @@
+{
+    "dependencies": [
+        "SUNWcs",
+        "library/libxml2",
+        "library/libxslt",
+        "runtime/python-35",
+        "system/library"
+    ],
+    "fmris": [
+        "library/python/lxml-35",
+        "library/python/lxml"
+    ],
+    "name": "pylxml"
+}

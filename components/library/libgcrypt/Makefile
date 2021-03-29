@@ -27,14 +27,13 @@ BUILD_BITS=		32_and_64
 include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		libgcrypt
-COMPONENT_VERSION=	1.8.5
+COMPONENT_VERSION=	1.9.2
 COMPONENT_FMRI=		system/library/security/libgcrypt
 COMPONENT_SUMMARY=	GnuPG libgcrypt library
-COMPONENT_PROJECT_URL=	http://www.gnu.org/software/libgcrypt/
+COMPONENT_PROJECT_URL=	https://www.gnu.org/software/libgcrypt/
 COMPONENT_SRC=		$(COMPONENT_NAME)-$(COMPONENT_VERSION)
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.bz2
-COMPONENT_ARCHIVE_HASH=	\
-	sha256:3b4a2a94cb637eff5bdebbcaf46f4d95c4f25206f459809339cdada0eb577ac3
+COMPONENT_ARCHIVE_HASH= sha256:b2c10d091513b271e47177274607b1ffba3d95b188bbfa8797f948aec9053c5a
 COMPONENT_ARCHIVE_URL=	ftp://ftp.gnupg.org/gcrypt/$(COMPONENT_NAME)/$(COMPONENT_ARCHIVE)
 COMPONENT_CLASSIFICATION= System/Security
 COMPONENT_LICENSE=	LGPL, BSD, BSD-like

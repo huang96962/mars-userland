@@ -28,7 +28,7 @@ include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		cffi
 COMPONENT_VERSION=	1.12.2
-COMPONENT_REVISION=	1
+COMPONENT_REVISION=	3
 COMPONENT_SRC=		$(COMPONENT_NAME)-$(COMPONENT_VERSION)
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.gz
 COMPONENT_ARCHIVE_HASH=	\
@@ -75,12 +75,10 @@ install:	$(INSTALL_32_and_64)
 
 test:		$(TEST_32_and_64)
 
-REQUIRED_PACKAGES += library/python/pycparser-27
-REQUIRED_PACKAGES += library/python/pycparser-34
+#REQUIRED_PACKAGES += library/python/pycparser-27
 REQUIRED_PACKAGES += library/python/pycparser-35
-REQUIRED_PACKAGES += runtime/python-34
 # Auto-generated dependencies
 REQUIRED_PACKAGES += library/libffi
-REQUIRED_PACKAGES += runtime/python-27
+#REQUIRED_PACKAGES += runtime/python-27
 REQUIRED_PACKAGES += runtime/python-35
 REQUIRED_PACKAGES += system/library

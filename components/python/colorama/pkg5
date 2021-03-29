@@ -1,0 +1,10 @@
+{
+    "dependencies": [
+        "SUNWcs"
+    ],
+    "fmris": [
+        "library/python/colorama-35",
+        "library/python/colorama"
+    ],
+    "name": "colorama"
+}

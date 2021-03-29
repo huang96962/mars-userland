@@ -1,0 +1,13 @@
+{
+    "dependencies": [
+        "SUNWcs",
+        "library/glib2",
+        "library/slang",
+        "runtime/perl-522",
+        "system/library"
+    ],
+    "fmris": [
+        "file/mc"
+    ],
+    "name": "mc"
+}

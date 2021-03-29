@@ -23,36 +23,30 @@
 # Copyright (c) 2013, 2015, Oracle and/or its affiliates. All rights reserved.
 #
 
+BUILD_BITS=NO_ARCH
+BUILD_STYLE=setup.py
 include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		six
-COMPONENT_VERSION=	1.11.0
+COMPONENT_VERSION=	1.15.0
+COMPONENT_REVISION=	1
 COMPONENT_SRC=		$(COMPONENT_NAME)-$(COMPONENT_VERSION)
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.gz
 COMPONENT_ARCHIVE_HASH=	\
-    sha256:70e8a77beed4562e7f14fe23a786b54f6296e34344c23bc42f07b15018ff98e9
+    sha256:30639c035cdb23534cd4aa2dd52c3bf48f06e5f4a941509c8bafd8ce11080259
 COMPONENT_ARCHIVE_URL=	$(call pypi_url)
 COMPONENT_PROJECT_URL=	http://pypi.python.org/pypi/six/
-COMPONENT_BUGDB=	python-mod/six
 
-PYTHON_VERSIONS=	3.5
+PYTHON_VERSIONS=	$(PYTHON3_VERSION)
 
-include $(WS_MAKE_RULES)/prep.mk
-include $(WS_MAKE_RULES)/setup.py.mk
-include $(WS_MAKE_RULES)/ips.mk
+include $(WS_MAKE_RULES)/common.mk
 
 COMPONENT_TEST_DIR =	$(SOURCE_DIR)
 COMPONENT_TEST_ARGS =	test_six.py
 COMPONENT_TEST_CMD =	py.test-$(PYTHON_VERSION)
 
-# common targets
-build:		$(BUILD_NO_ARCH)
-
-install:	$(INSTALL_NO_ARCH)
-
-test:		$(TEST_NO_ARCH)
-
 # Auto-generated dependencies
-REQUIRED_PACKAGES += runtime/python-27
-REQUIRED_PACKAGES += runtime/python-34
+#REQUIRED_PACKAGES += runtime/python-27
 REQUIRED_PACKAGES += runtime/python-35
+#REQUIRED_PACKAGES += runtime/python-37
+#REQUIRED_PACKAGES += runtime/python-39

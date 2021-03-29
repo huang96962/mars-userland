@@ -1,0 +1,12 @@
+{
+    "dependencies": [
+        "SUNWcs",
+        "runtime/perl-524",
+        "shell/which",
+        "system/library"
+    ],
+    "fmris": [
+        "shell/parallel"
+    ],
+    "name": "parallel"
+}

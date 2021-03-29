@@ -21,6 +21,7 @@
 # Copyright (c) 2013, Colin Ellis. All rights reserved.
 # Copyright (c) 2011, 2012, Oracle and/or its affiliates. All rights reserved.
 # Copyright (c) 2019, Michal Nowak
+# Copyright (c) 2021, Nona Hansel
 #
 
 BUILD_BITS=		64
@@ -28,13 +29,12 @@ BUILD_BITS=		64
 include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		gnupg
-COMPONENT_VERSION=	2.2.19
-COMPONENT_REVISION=	1
+COMPONENT_VERSION=	2.2.27
 COMPONENT_SRC=		$(COMPONENT_NAME)-$(COMPONENT_VERSION)
-COMPONENT_PROJECT_URL=	http://www.gnupg.org/
+COMPONENT_PROJECT_URL=	https://www.gnupg.org/
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.bz2
 COMPONENT_ARCHIVE_HASH=	\
-	sha256:242554c0e06f3a83c420b052f750b65ead711cc3fddddb5e7274fcdbb4e9dec0
+	sha256:34e60009014ea16402069136e0a5f63d9b65f90096244975db5cea74b3d02399
 COMPONENT_ARCHIVE_URL=	ftp://ftp.gnupg.org/gcrypt/gnupg/$(COMPONENT_ARCHIVE)
 
 include $(WS_MAKE_RULES)/common.mk
@@ -89,12 +89,20 @@ install:	$(INSTALL_64)
 	    $(MV) -f $$f.8 $$f.1m ; fi ; \
 	    done )
 
+COMPONENT_TEST_TRANSFORMS += \
+         '-n ' \
+         '-e "/^PASS:/p" ' \
+         '-e "/^FAIL:/p" ' \
+         '-e "/^SKIP:/p" ' \
+         '-e "/^\# /p" '
+
 # Missing dependencies for pinentry
 REQUIRED_PACKAGES += library/desktop/gtk2
 REQUIRED_PACKAGES += library/glib2
 REQUIRED_PACKAGES += library/libsecret
 
 # Auto-generated dependencies
+REQUIRED_PACKAGES += SUNWcs
 REQUIRED_PACKAGES += compress/bzip2
 REQUIRED_PACKAGES += database/sqlite-3
 REQUIRED_PACKAGES += library/gnutls-3
@@ -107,6 +115,5 @@ REQUIRED_PACKAGES += library/security/libgpg-error
 REQUIRED_PACKAGES += library/security/libksba
 REQUIRED_PACKAGES += library/zlib
 REQUIRED_PACKAGES += security/pinentry
-REQUIRED_PACKAGES += SUNWcs
 REQUIRED_PACKAGES += system/library
 REQUIRED_PACKAGES += system/library/security/libgcrypt

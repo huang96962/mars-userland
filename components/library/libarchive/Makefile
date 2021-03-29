@@ -29,7 +29,7 @@ BUILD_BITS=		32_and_64
 include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		libarchive
-COMPONENT_VERSION=	3.4.1
+COMPONENT_VERSION=	3.5.1
 COMPONENT_SUMMARY=	multi-format archive and compression library
 COMPONENT_DESCRIPTION=	The libarchive(3LIB) library provides a flexible\
  interface for reading and writing archives in various formats such as\
@@ -39,12 +39,10 @@ COMPONENT_DESCRIPTION=	The libarchive(3LIB) library provides a flexible\
  readers serially iterate through the archive, writers serially\
  add things to the archive.
 COMPONENT_SRC=		libarchive-$(COMPONENT_VERSION)
-COMPONENT_PROJECT_URL=	http://www.libarchive.org/
+COMPONENT_PROJECT_URL=	https://www.libarchive.org/
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.gz
-COMPONENT_ARCHIVE_HASH=	\
-	sha256:fcf87f3ad8db2e4f74f32526dee62dd1fb9894782b0a503a89c9d7a70a235191
-COMPONENT_ARCHIVE_URL= \
-	https://github.com/libarchive/libarchive/releases/download/v$(COMPONENT_VERSION)//$(COMPONENT_ARCHIVE)
+COMPONENT_ARCHIVE_HASH=	sha256:9015d109ec00bb9ae1a384b172bf2fc1dff41e2c66e5a9eeddf933af9db37f5a
+COMPONENT_ARCHIVE_URL= https://www.libarchive.org/downloads/$(COMPONENT_ARCHIVE)
 COMPONENT_FMRI=        library/libarchive
 COMPONENT_CLASSIFICATION=       System/Libraries
 COMPONENT_LICENSE=      BSD-like
@@ -106,6 +104,7 @@ COMPONENT_TEST_TRANSFORMS += \
 # Build requirements
 REQUIRED_PACKAGES += print/filter/ghostscript
 REQUIRED_PACKAGES += text/groff
+
 # Auto-generated dependencies
 REQUIRED_PACKAGES += compress/bzip2
 REQUIRED_PACKAGES += compress/xz

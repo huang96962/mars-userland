@@ -21,31 +21,30 @@
 
 #
 # Copyright (c) 2012, Oracle and/or its affiliates. All rights reserved.
-# Modified by Aurelien Larcher, 2015-2018.
+# Modified by Aurelien Larcher, 2015-2020.
 #
 
 include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		automake
 COMPONENT_MAJOR_VERSION=1.16
-COMPONENT_VERSION=	$(COMPONENT_MAJOR_VERSION).1
+COMPONENT_VERSION=	$(COMPONENT_MAJOR_VERSION).3
 COMPONENT_FMRI=		developer/build/automake-116
 COMPONENT_CLASSIFICATION=Development/GNU
 COMPONENT_SRC=		$(COMPONENT_NAME)-$(COMPONENT_VERSION)
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.gz
 COMPONENT_ARCHIVE_HASH=	\
-  sha256:608a97523f97db32f1f5d5615c98ca69326ced2054c9f82e65bade7fc4c9dea8
-COMPONENT_ARCHIVE_URL=	http://ftp.gnu.org/pub/gnu/automake/$(COMPONENT_ARCHIVE)
+	sha256:ce010788b51f64511a1e9bb2a1ec626037c6d0e7ede32c1c103611b9d3cba65f
+COMPONENT_ARCHIVE_URL=	https://ftp.gnu.org/pub/gnu/automake/$(COMPONENT_ARCHIVE)
 COMPONENT_SUMMARY=	A Makefile generator
-COMPONENT_PROJECT_URL=  http://www.gnu.org/software/automake/ 
-COMPONENT_LICENSE_FILE=	$(COMPONENT_NAME).license
+COMPONENT_PROJECT_URL=  https://www.gnu.org/software/automake/ 
 COMPONENT_LICENSE=	GPLv2 FDLv1.3
 
 include $(WS_MAKE_RULES)/common.mk
 
 PKG_MACROS+= COMPONENT_MAJOR_VERSION=$(COMPONENT_MAJOR_VERSION)
 
-CONFIGURE_OPTIONS  +=	--program-transform-name=s/$$/-$(COMPONENT_MAJOR_VERSION)/
+#CONFIGURE_OPTIONS  +=	--program-transform-name=s/$$/-$(COMPONENT_MAJOR_VERSION)/
 CONFIGURE_OPTIONS  +=	--docdir=$(CONFIGURE_PREFIX)/share/doc/$(COMPONENT_NAME)-$(COMPONENT_MAJOR_VERSION)
 CONFIGURE_OPTIONS  +=	--infodir=$(CONFIGURE_INFODIR)
 CONFIGURE_OPTIONS  +=	PERL="$(PERL)"

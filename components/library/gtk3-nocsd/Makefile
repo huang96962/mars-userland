@@ -13,11 +13,13 @@
 # Copyright 2017 Alexander Pyhalov
 #
 
+BUILD_BITS=			64
+BUILD_STYLE=		justmake
 include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		gtk3-nocsd
 COMPONENT_VERSION=	3
-COMPONENT_REVISION=	1
+COMPONENT_REVISION=	3
 COMPONENT_FMRI=		library/desktop/gtk3/gtk3-nocsd
 COMPONENT_SUMMARY=	A small module used to disable the client side decoration of Gtk+ 3
 COMPONENT_CLASSIFICATION=Applications/Plug-ins and Run-times
@@ -29,30 +31,22 @@ COMPONENT_ARCHIVE_URL=	https://github.com/PCMan/gtk3-nocsd/archive/v$(COMPONENT_
 COMPONENT_LICENSE=	LGPLv2.1
 COMPONENT_LICENSE_FILE=	COPYING
 
-include $(WS_MAKE_RULES)/prep.mk
-include $(WS_MAKE_RULES)/justmake.mk
-include $(WS_MAKE_RULES)/ips.mk
+TEST_TARGET=		$(NO_TESTS)
+include $(WS_MAKE_RULES)/common.mk
 
 COMPONENT_BUILD_ENV += CC="$(CC)"
 COMPONENT_BUILD_ENV += CFLAGS="$(CFLAGS)"
 COMPONENT_BUILD_ENV += LDFLAGS="$(LDFLAGS)"
 
-BINDIR.32 = /usr/bin
-BINDIR.64 = /usr/bin/$(MACH64)
+COMPONENT_INSTALL_ENV += bindir=$(USRBINDIR)
+COMPONENT_INSTALL_ENV += libdir=$(USRLIBDIR.$(BITS))
+COMPONENT_INSTALL_ENV += mandir=$(USRSHAREMANDIR)
+COMPONENT_INSTALL_ENV += bashcompletiondir=$(BASH_COMPLETIONS_PATH)
 
-LIBDIR.32 = /usr/lib
-LIBDIR.64 = /usr/lib/$(MACH64)
-
-COMPONENT_INSTALL_ENV += mandir=/usr/share/man
-COMPONENT_INSTALL_ENV += bindir=$(BINDIR.$(BITS))
-COMPONENT_INSTALL_ENV += libdir=$(LIBDIR.$(BITS))
-COMPONENT_INSTALL_ENV += bashcompletiondir=/usr/share/bash-completion/completions
-
-build: $(BUILD_32_and_64)
-
-install: $(INSTALL_32_and_64)
-
-test: $(NO_TESTS)
-
+# Manually added build dependencies
 REQUIRED_PACKAGES += library/desktop/gtk3
 REQUIRED_PACKAGES += library/desktop/gobject/gobject-introspection
+
+# Auto-generated dependencies
+REQUIRED_PACKAGES += SUNWcs
+REQUIRED_PACKAGES += system/library

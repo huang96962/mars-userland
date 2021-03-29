@@ -18,11 +18,11 @@ include ../../../make-rules/shared-macros.mk
 include $(WS_MAKE_RULES)/x11.mk
 
 COMPONENT_NAME=           fonttosfnt
-COMPONENT_VERSION=        1.1.0
+COMPONENT_VERSION=        1.2.1
 COMPONENT_SUMMARY=        fonttosfnt - Wrap a bitmap font in a sfnt (TrueType) wrapper
 COMPONENT_FMRI=           x11/fonttosfnt
 COMPONENT_ARCHIVE_HASH= \
-  sha256:7283fd477e3de75cce40b91b5012953e30b862975555d4482435e2ee7b0f46dc
+	sha256:07c835f1f98d7b462be8f1493d072b62418282421be18197e50579c70b0c259b
 
 include $(WS_MAKE_RULES)/common.mk
 

@@ -21,19 +21,19 @@
 #
 # Copyright (c) 2011, 2017, Oracle and/or its affiliates. All rights reserved.
 # Copyright 2015 Josef 'Jeff' Sipek <jeffpc@josefsipek.net>
-# Copyright 2016 Andreas Wacknitz <a.wacknitz@gmx.de>
+# Copyright 2016, 2021 Andreas Wacknitz <a.wacknitz@gmx.de>
 #
-PREFERRED_BITS=64
+BUILD_BITS=				64
 
 # parfait seems to hang on libcmsysTestDynload.so.bc, so for
 # now we have to disable it.
-PARFAIT_BUILD=no
+PARFAIT_BUILD=			no
 
 include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=         cmake
-COMPONENT_MAJOR_VERSION=3.15
-COMPONENT_VERSION=      $(COMPONENT_MAJOR_VERSION).1
+COMPONENT_MAJOR_VERSION=3.19
+COMPONENT_VERSION=      $(COMPONENT_MAJOR_VERSION).6
 COMPONENT_PROJECT_URL=  https://www.cmake.org/
 COMPONENT_FMRI=         developer/build/cmake
 COMPONENT_CLASSIFICATION=Development/Distribution Tools
@@ -46,15 +46,11 @@ CMake generates native makefiles and workspaces that can be used in the \
 workspaces that can be used in the compiler environment of your choice.
 COMPONENT_SRC=          $(COMPONENT_NAME)-$(COMPONENT_VERSION)
 COMPONENT_ARCHIVE=      $(COMPONENT_SRC).tar.gz
-COMPONENT_ARCHIVE_HASH=	\
-  sha256:18dec548d8f8b04d53c60f9cedcebaa6762f8425339d1e2c889c383d3ccdd7f7
-COMPONENT_ARCHIVE_URL= \
-  https://www.cmake.org/files/v$(COMPONENT_MAJOR_VERSION)/$(COMPONENT_ARCHIVE)
+COMPONENT_ARCHIVE_HASH=	sha256:ec87ab67c45f47c4285f204280c5cde48e1c920cfcfed1555b27fb3b1a1d20ba
+COMPONENT_ARCHIVE_URL=	https://www.cmake.org/files/v$(COMPONENT_MAJOR_VERSION)/$(COMPONENT_ARCHIVE)
 COMPONENT_LICENSE=      BSD, MIT, GPLv2, Curl, PD
 
-include $(WS_MAKE_RULES)/prep.mk
-include $(WS_MAKE_RULES)/configure.mk
-include $(WS_MAKE_RULES)/ips.mk
+include $(WS_MAKE_RULES)/common.mk
 
 # Need to remove this option from LD_OPTIONS (only affects sparc build);
 # it causes a SegFault failure in kwsys/testSystemInformation
@@ -102,7 +98,7 @@ COMPONENT_BUILD_TARGETS =	all
 # the amount of change needed between each update.
 PKG_MACROS+= CMAKE_MAJOR_VERSION=$(COMPONENT_MAJOR_VERSION)
 
-ASLR_MODE = $(ASLR_ENABLE)
+#ASLR_MODE = $(ASLR_ENABLE)
 
 # Need C and C++ compiler locations for cmake tests
 COMPONENT_TEST_ENV += LANG=C
@@ -114,18 +110,9 @@ COMPONENT_TEST_ENV += CXXFLAGS="$(CXXFLAGS)"
 COMPONENT_TEST_ENV += FCFLAGS="$(FCFLAGS)"
 COMPONENT_TEST_ENV += LDFLAGS="$(LDFLAGS)"
 
+# Most Fortran tests fail because -m64 they do not pass compiler flags as they should.
 # Results output is different on Intel vs. SPARC.
 COMPONENT_TEST_MASTER = $(COMPONENT_TEST_RESULTS_DIR)/results-$(MACH).master
-
-# Most Fortran tests fail because -m64 they do not pass compiler flags as they should.
-# The following tests FAILED:
-#         39 - FortranOnly (Failed)
-#         40 - VSGNUFortran (Failed)
-#         83 - Module.CheckIPOSupported-Fortran (Failed)
-#        237 - Fortran (Failed)
-#        238 - FortranModules (Failed)
-#        267 - CMakeOnly.CompilerIdFortran (Failed)
-#        434 - RunCMake.CompilerLauncher (Failed)
 
 COMPONENT_TEST_TARGETS =	test
 
@@ -139,20 +126,13 @@ COMPONENT_TEST_TRANSFORMS += \
 	'-e "s|^make.*: Entering directory.*$$|XXX_REMOVE_XXX|g" ' \
 	'-e "/^XXX_REMOVE_XXX$$/d" '
 
-# common targets
-build:		$(BUILD_64)
-
-install:	$(INSTALL_64)
-
-test:		$(TEST_64)
-
 # Auto-generated dependencies
+REQUIRED_PACKAGES += $(GCC_RUNTIME_PKG)
+REQUIRED_PACKAGES += $(GXX_RUNTIME_PKG)
 REQUIRED_PACKAGES += library/expat
 REQUIRED_PACKAGES += library/libarchive
 REQUIRED_PACKAGES += library/ncurses
 REQUIRED_PACKAGES += library/zlib
 REQUIRED_PACKAGES += system/library
-REQUIRED_PACKAGES += $(GXX_RUNTIME_PKG)
-REQUIRED_PACKAGES += $(GCC_RUNTIME_PKG)
 REQUIRED_PACKAGES += system/library/math
 REQUIRED_PACKAGES += web/curl

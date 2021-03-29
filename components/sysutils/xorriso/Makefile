@@ -20,6 +20,7 @@
 #
 # Copyright (c) 2011, 2012, Oracle and/or its affiliates. All rights reserved.
 # Copyright (c) 2019, Michal Nowak
+# Copyright (c) 2021, Nona Hansel
 #
 
 BUILD_BITS=		64
@@ -27,13 +28,13 @@ BUILD_BITS=		64
 include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=         xorriso
-COMPONENT_VERSION=      1.5.1
+COMPONENT_VERSION=      1.5.4
 COMPONENT_SRC=          $(COMPONENT_NAME)-$(COMPONENT_VERSION)
 COMPONENT_SUMMARY=	command line ISO-9660 and Rock Ridge manipulation tool
 COMPONENT_PROJECT_URL=  https://www.gnu.org/software/xorriso/
 COMPONENT_ARCHIVE=      $(COMPONENT_SRC).tar.gz
 COMPONENT_ARCHIVE_HASH=	\
-	sha256:c100021e78b55e73a28826906e9d398ef1037b128ac0e1cc48faba8aa3dcdf15
+	sha256:3ac155f0ca53e8dbeefacc7f32205a98f4f27d2d348de39ee0183ba8a4c9e392
 COMPONENT_ARCHIVE_URL=  https://www.gnu.org/software/xorriso/$(COMPONENT_ARCHIVE)
 COMPONENT_FMRI=		media/xorriso
 COMPONENT_CLASSIFICATION=	System/Media

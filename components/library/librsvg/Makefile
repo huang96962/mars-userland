@@ -19,8 +19,7 @@ BUILD_BITS=32_and_64
 include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		librsvg
-COMPONENT_VERSION=	2.40.20
-COMPONENT_REVISION=	1
+COMPONENT_VERSION=	2.40.21
 COMPONENT_MAJOR_VERSION=$(basename $(COMPONENT_VERSION))
 COMPONENT_FMRI=		image/library/librsvg
 COMPONENT_CLASSIFICATION=System/Multimedia Libraries
@@ -28,9 +27,9 @@ COMPONENT_SUMMARY=	Library for SVG support for GNOME
 COMPONENT_SRC=		$(COMPONENT_NAME)-$(COMPONENT_VERSION)
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.xz
 COMPONENT_ARCHIVE_HASH= \
-	sha256:cff4dd3c3b78bfe99d8fcfad3b8ba1eee3289a0823c0e118d78106be6b84c92b
+	sha256:f7628905f1cada84e87e2b14883ed57d8094dca3281d5bcb24ece4279e9a92ba
 COMPONENT_ARCHIVE_URL= \
-	http://ftp.gnome.org/pub/GNOME/sources/$(COMPONENT_NAME)/$(COMPONENT_MAJOR_VERSION)/$(COMPONENT_ARCHIVE)
+	https://ftp.gnome.org/pub/GNOME/sources/$(COMPONENT_NAME)/$(COMPONENT_MAJOR_VERSION)/$(COMPONENT_ARCHIVE)
 COMPONENT_PROJECT_URL= https://www.gnome.org/
 COMPONENT_LICENSE= LGPLv2
 
@@ -51,6 +50,7 @@ CONFIGURE_OPTIONS.64 =	--sysconfdir=/etc/$(MACH64)
 CONFIGURE_OPTIONS +=	--with-html-dir=/usr/share/gtk-doc/html/librsvg
 CONFIGURE_OPTIONS +=	--disable-Bsymbolic
 CONFIGURE_OPTIONS +=	--disable-static
+CONFIGURE_OPTIONS.32 =	--disable-introspection
 
 COMPONENT_BUILD_ENV += CC="$(CC)"
 COMPONENT_BUILD_ENV += CFLAGS="$(CFLAGS)"
@@ -62,8 +62,10 @@ COMPONENT_TEST_TRANSFORMS = "'/TOTAL|PASS|FAIL|XFAIL|SKIP|XPASS|ERROR/'"
 unexport SHELLOPTS
 
 # Auto-generated dependencies
+REQUIRED_PACKAGES += developer/documentation-tool/gtk-doc
 REQUIRED_PACKAGES += library/desktop/cairo
 REQUIRED_PACKAGES += library/desktop/gdk-pixbuf
+REQUIRED_PACKAGES += library/desktop/gobject/gobject-introspection
 REQUIRED_PACKAGES += library/desktop/gtk3
 REQUIRED_PACKAGES += library/desktop/pango
 REQUIRED_PACKAGES += library/glib2

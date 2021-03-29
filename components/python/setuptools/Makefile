@@ -22,33 +22,29 @@
 # Copyright (c) 2019, Michal Nowak
 #
 
+BUILD_BITS=NO_ARCH
+BUILD_STYLE=setup.py
 include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		setuptools
-COMPONENT_VERSION=	41.0.1
+COMPONENT_VERSION=	50.3.2
 COMPONENT_SRC=		$(COMPONENT_NAME)-$(COMPONENT_VERSION)
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).zip
 COMPONENT_ARCHIVE_HASH=	\
-	sha256:a222d126f5471598053c9a77f4b5d4f26eaa1f150ad6e01dcf1a42e185d05613
+  sha256:ed0519d27a243843b05d82a5e9d01b0b083d9934eaa3d02779a23da18077bd3c
 COMPONENT_ARCHIVE_URL=	$(call pypi_url)
 COMPONENT_PROJECT_URL=	https://github.com/pypa/setuptools
 
-PYTHON_VERSIONS=	3.5
+PYTHON_VERSIONS=	$(PYTHON3_VERSION)
 
-include $(WS_TOP)/make-rules/prep.mk
-include $(WS_TOP)/make-rules/setup.py.mk
-include $(WS_TOP)/make-rules/ips.mk
+TEST_TARGET=		$(NO_TESTS)
+include $(WS_MAKE_RULES)/common.mk
 
 # Need to bootstrap setuptools before we can run setup
 COMPONENT_PREP_ACTION = (cd $(@D) ; $(PYTHON) bootstrap.py)
 
-build:		$(BUILD_NO_ARCH)
-
-install:	$(INSTALL_NO_ARCH)
-
-test:		$(NO_TESTS)
 
 # Auto-generated dependencies
-REQUIRED_PACKAGES += runtime/python-27
-REQUIRED_PACKAGES += runtime/python-34
 REQUIRED_PACKAGES += runtime/python-35
+#REQUIRED_PACKAGES += runtime/python-37
+#REQUIRED_PACKAGES += runtime/python-39

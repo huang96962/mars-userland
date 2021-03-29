@@ -1,0 +1,13 @@
+{
+    "dependencies": [
+        "SUNWcs",
+        "compress/xz",
+        "library/libarchive",
+        "system/library",
+        "text/asciidoc"
+    ],
+    "fmris": [
+        "compress/pixz"
+    ],
+    "name": "pixz"
+}

@@ -1,44 +1,34 @@
 #
-# CDDL HEADER START
+# This file and its contents are supplied under the terms of the
+# Common Development and Distribution License ("CDDL"), version 1.0.
+# You may only use this file in accordance with the terms of version
+# 1.0 of the CDDL.
 #
-# The contents of this file are subject to the terms of the
-# Common Development and Distribution License (the "License").
-# You may not use this file except in compliance with the License.
+# A full copy of the text of the CDDL should have accompanied this
+# source.  A copy of the CDDL is also available via the Internet at
+# http://www.illumos.org/license/CDDL.
 #
-# You can obtain a copy of the license at usr/src/OPENSOLARIS.LICENSE
-# or http://www.opensolaris.org/os/licensing.
-# See the License for the specific language governing permissions
-# and limitations under the License.
-#
-# When distributing Covered Code, include this CDDL HEADER in each
-# file and include the License file at usr/src/OPENSOLARIS.LICENSE.
-# If applicable, add the following below this CDDL HEADER, with the
-# fields enclosed by brackets "[]" replaced with your own identifying
-# information: Portions Copyright [yyyy] [name of copyright owner]
-#
-# CDDL HEADER END
+
 #
 # Copyright (c) 2011, 2013, Oracle and/or its affiliates. All rights reserved.
 # Copyright (c) 2020, Michal Nowak
 #
 
-set name=pkg.fmri value=pkg:/$(COMPONENT_FMRI)@$(IPS_COMPONENT_VERSION),$(BUILD_VERSION)
+set name=pkg.fmri \
+    value=pkg:/$(COMPONENT_FMRI)@$(IPS_COMPONENT_VERSION),$(BUILD_VERSION)
 set name=pkg.summary value="$(COMPONENT_SUMMARY)"
 set name=pkg.description value="$(COMPONENT_DESCRIPTION)"
 set name=info.classification value="$(COMPONENT_CLASSIFICATION)"
-set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
 set name=info.source-url value=$(COMPONENT_ARCHIVE_URL)
+set name=info.upstream-url value=$(COMPONENT_PROJECT_URL)
 set name=org.opensolaris.consolidation value=$(CONSOLIDATION)
 
 <transform file path=usr/lib/git-core/.* -> default mode 0555>
 
-license $(COMPONENT_LICENSE_FILE) license=$(COMPONENT_LICENSE)
+license $(COMPONENT_LICENSE_FILE) license='$(COMPONENT_LICENSE)'
 
 # Needed at runtime for localization in shell scripts
 depend fmri=text/gnu-gettext type=require
-
-# bash completion uses nawk
-depend fmri=pkg:/system/extended-system-utilities type=require
 
 file path=usr/bin/diff-highlight
 hardlink path=usr/bin/git target=../lib/git-core/git-upload-pack
@@ -60,6 +50,7 @@ file path=usr/lib/git-core/git-bisect
 hardlink path=usr/lib/git-core/git-bisect--helper target=git-upload-pack
 hardlink path=usr/lib/git-core/git-blame target=git-upload-pack
 hardlink path=usr/lib/git-core/git-branch target=git-upload-pack
+hardlink path=usr/lib/git-core/git-bugreport target=git-upload-pack
 hardlink path=usr/lib/git-core/git-bundle target=git-upload-pack
 hardlink path=usr/lib/git-core/git-cat-file target=git-upload-pack
 hardlink path=usr/lib/git-core/git-check-attr target=git-upload-pack
@@ -80,9 +71,10 @@ hardlink path=usr/lib/git-core/git-commit-tree target=git-upload-pack
 hardlink path=usr/lib/git-core/git-config target=git-upload-pack
 hardlink path=usr/lib/git-core/git-count-objects target=git-upload-pack
 hardlink path=usr/lib/git-core/git-credential target=git-upload-pack
-file path=usr/lib/git-core/git-credential-cache
-file path=usr/lib/git-core/git-credential-cache--daemon
-file path=usr/lib/git-core/git-credential-store
+hardlink path=usr/lib/git-core/git-credential-cache target=git-upload-pack
+hardlink path=usr/lib/git-core/git-credential-cache--daemon \
+    target=git-upload-pack
+hardlink path=usr/lib/git-core/git-credential-store target=git-upload-pack
 file path=usr/lib/git-core/git-cvsexportcommit
 file path=usr/lib/git-core/git-cvsimport
 file path=usr/lib/git-core/git-cvsserver
@@ -96,12 +88,13 @@ hardlink path=usr/lib/git-core/git-difftool target=git-upload-pack
 file path=usr/lib/git-core/git-difftool--helper
 hardlink path=usr/lib/git-core/git-env--helper target=git-upload-pack
 hardlink path=usr/lib/git-core/git-fast-export target=git-upload-pack
-file path=usr/lib/git-core/git-fast-import
+hardlink path=usr/lib/git-core/git-fast-import target=git-upload-pack
 hardlink path=usr/lib/git-core/git-fetch target=git-upload-pack
 hardlink path=usr/lib/git-core/git-fetch-pack target=git-upload-pack
 file path=usr/lib/git-core/git-filter-branch
 hardlink path=usr/lib/git-core/git-fmt-merge-msg target=git-upload-pack
 hardlink path=usr/lib/git-core/git-for-each-ref target=git-upload-pack
+hardlink path=usr/lib/git-core/git-for-each-repo target=git-upload-pack
 hardlink path=usr/lib/git-core/git-format-patch target=git-upload-pack
 hardlink path=usr/lib/git-core/git-fsck target=git-upload-pack
 hardlink path=usr/lib/git-core/git-fsck-objects target=git-upload-pack
@@ -121,13 +114,13 @@ hardlink path=usr/lib/git-core/git-init target=git-upload-pack
 hardlink path=usr/lib/git-core/git-init-db target=git-upload-pack
 file path=usr/lib/git-core/git-instaweb
 hardlink path=usr/lib/git-core/git-interpret-trailers target=git-upload-pack
-file path=usr/lib/git-core/git-legacy-stash
 hardlink path=usr/lib/git-core/git-log target=git-upload-pack
 hardlink path=usr/lib/git-core/git-ls-files target=git-upload-pack
 hardlink path=usr/lib/git-core/git-ls-remote target=git-upload-pack
 hardlink path=usr/lib/git-core/git-ls-tree target=git-upload-pack
 hardlink path=usr/lib/git-core/git-mailinfo target=git-upload-pack
 hardlink path=usr/lib/git-core/git-mailsplit target=git-upload-pack
+hardlink path=usr/lib/git-core/git-maintenance target=git-upload-pack
 hardlink path=usr/lib/git-core/git-merge target=git-upload-pack
 hardlink path=usr/lib/git-core/git-merge-base target=git-upload-pack
 hardlink path=usr/lib/git-core/git-merge-file target=git-upload-pack
@@ -151,7 +144,6 @@ file path=usr/lib/git-core/git-p4
 hardlink path=usr/lib/git-core/git-pack-objects target=git-upload-pack
 hardlink path=usr/lib/git-core/git-pack-redundant target=git-upload-pack
 hardlink path=usr/lib/git-core/git-pack-refs target=git-upload-pack
-file path=usr/lib/git-core/git-parse-remote
 hardlink path=usr/lib/git-core/git-patch-id target=git-upload-pack
 hardlink path=usr/lib/git-core/git-prune target=git-upload-pack
 hardlink path=usr/lib/git-core/git-prune-packed target=git-upload-pack
@@ -171,7 +163,6 @@ hardlink path=usr/lib/git-core/git-remote-ftp target=git-remote-ftps
 file path=usr/lib/git-core/git-remote-ftps
 hardlink path=usr/lib/git-core/git-remote-http target=git-remote-ftps
 hardlink path=usr/lib/git-core/git-remote-https target=git-remote-ftps
-file path=usr/lib/git-core/git-remote-testsvn
 hardlink path=usr/lib/git-core/git-repack target=git-upload-pack
 hardlink path=usr/lib/git-core/git-replace target=git-upload-pack
 file path=usr/lib/git-core/git-request-pull
@@ -221,7 +212,6 @@ hardlink path=usr/lib/git-core/git-worktree target=git-upload-pack
 hardlink path=usr/lib/git-core/git-write-tree target=git-upload-pack
 file path=usr/lib/git-core/mergetools/araxis
 file path=usr/lib/git-core/mergetools/bc
-file path=usr/lib/git-core/mergetools/bc3
 file path=usr/lib/git-core/mergetools/codecompare
 file path=usr/lib/git-core/mergetools/deltawalker
 file path=usr/lib/git-core/mergetools/diffmerge
@@ -231,40 +221,37 @@ file path=usr/lib/git-core/mergetools/emerge
 file path=usr/lib/git-core/mergetools/examdiff
 file path=usr/lib/git-core/mergetools/guiffy
 file path=usr/lib/git-core/mergetools/gvimdiff
-file path=usr/lib/git-core/mergetools/gvimdiff2
-file path=usr/lib/git-core/mergetools/gvimdiff3
 file path=usr/lib/git-core/mergetools/kdiff3
 file path=usr/lib/git-core/mergetools/kompare
 file path=usr/lib/git-core/mergetools/meld
+file path=usr/lib/git-core/mergetools/nvimdiff
 file path=usr/lib/git-core/mergetools/opendiff
 file path=usr/lib/git-core/mergetools/p4merge
 file path=usr/lib/git-core/mergetools/smerge
 file path=usr/lib/git-core/mergetools/tkdiff
 file path=usr/lib/git-core/mergetools/tortoisemerge
 file path=usr/lib/git-core/mergetools/vimdiff
-file path=usr/lib/git-core/mergetools/vimdiff2
-file path=usr/lib/git-core/mergetools/vimdiff3
 file path=usr/lib/git-core/mergetools/winmerge
 file path=usr/lib/git-core/mergetools/xxdiff
-file path=usr/perl5/vendor_perl/5.22/i86pc-solaris-64int/FromCPAN/Error.pm
-file path=usr/perl5/vendor_perl/5.22/i86pc-solaris-64int/FromCPAN/Mail/Address.pm
-file path=usr/perl5/vendor_perl/5.22/i86pc-solaris-64int/Git.pm
-file path=usr/perl5/vendor_perl/5.22/i86pc-solaris-64int/Git/I18N.pm
-file path=usr/perl5/vendor_perl/5.22/i86pc-solaris-64int/Git/IndexInfo.pm
-file path=usr/perl5/vendor_perl/5.22/i86pc-solaris-64int/Git/LoadCPAN.pm
-file path=usr/perl5/vendor_perl/5.22/i86pc-solaris-64int/Git/LoadCPAN/Error.pm
-file path=usr/perl5/vendor_perl/5.22/i86pc-solaris-64int/Git/LoadCPAN/Mail/Address.pm
-file path=usr/perl5/vendor_perl/5.22/i86pc-solaris-64int/Git/Packet.pm
-file path=usr/perl5/vendor_perl/5.22/i86pc-solaris-64int/Git/SVN.pm
-file path=usr/perl5/vendor_perl/5.22/i86pc-solaris-64int/Git/SVN/Editor.pm
-file path=usr/perl5/vendor_perl/5.22/i86pc-solaris-64int/Git/SVN/Fetcher.pm
-file path=usr/perl5/vendor_perl/5.22/i86pc-solaris-64int/Git/SVN/GlobSpec.pm
-file path=usr/perl5/vendor_perl/5.22/i86pc-solaris-64int/Git/SVN/Log.pm
-file path=usr/perl5/vendor_perl/5.22/i86pc-solaris-64int/Git/SVN/Memoize/YAML.pm
-file path=usr/perl5/vendor_perl/5.22/i86pc-solaris-64int/Git/SVN/Migration.pm
-file path=usr/perl5/vendor_perl/5.22/i86pc-solaris-64int/Git/SVN/Prompt.pm
-file path=usr/perl5/vendor_perl/5.22/i86pc-solaris-64int/Git/SVN/Ra.pm
-file path=usr/perl5/vendor_perl/5.22/i86pc-solaris-64int/Git/SVN/Utils.pm
+file path=usr/perl5/vendor_perl/5.22/$(P_ARCH)-solaris-64int/FromCPAN/Error.pm
+file path=usr/perl5/vendor_perl/5.22/$(P_ARCH)-solaris-64int/FromCPAN/Mail/Address.pm
+file path=usr/perl5/vendor_perl/5.22/$(P_ARCH)-solaris-64int/Git.pm
+file path=usr/perl5/vendor_perl/5.22/$(P_ARCH)-solaris-64int/Git/I18N.pm
+file path=usr/perl5/vendor_perl/5.22/$(P_ARCH)-solaris-64int/Git/IndexInfo.pm
+file path=usr/perl5/vendor_perl/5.22/$(P_ARCH)-solaris-64int/Git/LoadCPAN.pm
+file path=usr/perl5/vendor_perl/5.22/$(P_ARCH)-solaris-64int/Git/LoadCPAN/Error.pm
+file path=usr/perl5/vendor_perl/5.22/$(P_ARCH)-solaris-64int/Git/LoadCPAN/Mail/Address.pm
+file path=usr/perl5/vendor_perl/5.22/$(P_ARCH)-solaris-64int/Git/Packet.pm
+file path=usr/perl5/vendor_perl/5.22/$(P_ARCH)-solaris-64int/Git/SVN.pm
+file path=usr/perl5/vendor_perl/5.22/$(P_ARCH)-solaris-64int/Git/SVN/Editor.pm
+file path=usr/perl5/vendor_perl/5.22/$(P_ARCH)-solaris-64int/Git/SVN/Fetcher.pm
+file path=usr/perl5/vendor_perl/5.22/$(P_ARCH)-solaris-64int/Git/SVN/GlobSpec.pm
+file path=usr/perl5/vendor_perl/5.22/$(P_ARCH)-solaris-64int/Git/SVN/Log.pm
+file path=usr/perl5/vendor_perl/5.22/$(P_ARCH)-solaris-64int/Git/SVN/Memoize/YAML.pm
+file path=usr/perl5/vendor_perl/5.22/$(P_ARCH)-solaris-64int/Git/SVN/Migration.pm
+file path=usr/perl5/vendor_perl/5.22/$(P_ARCH)-solaris-64int/Git/SVN/Prompt.pm
+file path=usr/perl5/vendor_perl/5.22/$(P_ARCH)-solaris-64int/Git/SVN/Ra.pm
+file path=usr/perl5/vendor_perl/5.22/$(P_ARCH)-solaris-64int/Git/SVN/Utils.pm
 file path=usr/share/bash-completion/completions/git
 link path=usr/share/bash-completion/completions/gitk target=git
 file path=usr/share/git-core/templates/description
@@ -279,6 +266,7 @@ file path=usr/share/git-core/templates/hooks/pre-push.sample
 file path=usr/share/git-core/templates/hooks/pre-rebase.sample
 file path=usr/share/git-core/templates/hooks/pre-receive.sample
 file path=usr/share/git-core/templates/hooks/prepare-commit-msg.sample
+file path=usr/share/git-core/templates/hooks/push-to-checkout.sample
 file path=usr/share/git-core/templates/hooks/update.sample
 file path=usr/share/git-core/templates/info/exclude
 file path=usr/share/git-gui/lib/about.tcl
@@ -366,9 +354,11 @@ file path=usr/share/locale/fr/LC_MESSAGES/git.mo
 file path=usr/share/locale/is/LC_MESSAGES/git.mo
 file path=usr/share/locale/it/LC_MESSAGES/git.mo
 file path=usr/share/locale/ko/LC_MESSAGES/git.mo
+file path=usr/share/locale/pl/LC_MESSAGES/git.mo
 file path=usr/share/locale/pt_PT/LC_MESSAGES/git.mo
 file path=usr/share/locale/ru/LC_MESSAGES/git.mo
 file path=usr/share/locale/sv/LC_MESSAGES/git.mo
+file path=usr/share/locale/tr/LC_MESSAGES/git.mo
 file path=usr/share/locale/vi/LC_MESSAGES/git.mo
 file path=usr/share/locale/zh_CN/LC_MESSAGES/git.mo
 file path=usr/share/locale/zh_TW/LC_MESSAGES/git.mo
@@ -381,6 +371,7 @@ file path=usr/share/man/man1/git-archive.1
 file path=usr/share/man/man1/git-bisect.1
 file path=usr/share/man/man1/git-blame.1
 file path=usr/share/man/man1/git-branch.1
+file path=usr/share/man/man1/git-bugreport.1
 file path=usr/share/man/man1/git-bundle.1
 file path=usr/share/man/man1/git-cat-file.1
 file path=usr/share/man/man1/git-check-attr.1
@@ -421,6 +412,7 @@ file path=usr/share/man/man1/git-fetch.1
 file path=usr/share/man/man1/git-filter-branch.1
 file path=usr/share/man/man1/git-fmt-merge-msg.1
 file path=usr/share/man/man1/git-for-each-ref.1
+file path=usr/share/man/man1/git-for-each-repo.1
 file path=usr/share/man/man1/git-format-patch.1
 file path=usr/share/man/man1/git-fsck-objects.1
 file path=usr/share/man/man1/git-fsck.1
@@ -445,6 +437,7 @@ file path=usr/share/man/man1/git-ls-remote.1
 file path=usr/share/man/man1/git-ls-tree.1
 file path=usr/share/man/man1/git-mailinfo.1
 file path=usr/share/man/man1/git-mailsplit.1
+file path=usr/share/man/man1/git-maintenance.1
 file path=usr/share/man/man1/git-merge-base.1
 file path=usr/share/man/man1/git-merge-file.1
 file path=usr/share/man/man1/git-merge-index.1
@@ -463,7 +456,6 @@ file path=usr/share/man/man1/git-p4.1
 file path=usr/share/man/man1/git-pack-objects.1
 file path=usr/share/man/man1/git-pack-redundant.1
 file path=usr/share/man/man1/git-pack-refs.1
-file path=usr/share/man/man1/git-parse-remote.1
 file path=usr/share/man/man1/git-patch-id.1
 file path=usr/share/man/man1/git-prune-packed.1
 file path=usr/share/man/man1/git-prune.1
@@ -539,6 +531,7 @@ file path=usr/share/man/man5/gitcredentials.5
 file path=usr/share/man/man5/gitcvs-migration.5
 file path=usr/share/man/man5/gitdiffcore.5
 file path=usr/share/man/man5/giteveryday.5
+file path=usr/share/man/man5/gitfaq.5
 file path=usr/share/man/man5/gitglossary.5
 file path=usr/share/man/man5/gitnamespaces.5
 file path=usr/share/man/man5/gitremote-helpers.5

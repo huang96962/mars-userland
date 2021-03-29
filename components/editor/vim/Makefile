@@ -23,6 +23,7 @@
 # Copyright (c) 2011, 2019, Oracle and/or its affiliates. All rights reserved.
 # Copyright (c) 2017, Ken Mays
 # Copyright (c) 2019, Michal Nowak
+# Copyright (c) 2020, Nona Hansel
 #
 
 BUILD_BITS=		64
@@ -30,18 +31,16 @@ BUILD_BITS=		64
 include ../../../make-rules/shared-macros.mk
 
 COMPONENT_NAME=		vim
-COMPONENT_VERSION=	8.2.0024
+COMPONENT_VERSION=	8.2.1897
 # Remove leading zeros in the patch-level part of $COMPONENT_VERSION (IPS does not like them)
 IPS_COMPONENT_VERSION=  $(shell echo $(COMPONENT_VERSION) | sed -e 's/\.00*\([1-9]\)/.\1/')
 COMPONENT_SRC=		$(COMPONENT_NAME)-$(COMPONENT_VERSION)
 COMPONENT_PROJECT_URL=	https://www.vim.org/
 COMPONENT_ARCHIVE=	$(COMPONENT_SRC).tar.gz
 COMPONENT_ARCHIVE_URL=	https://github.com/vim/vim/archive/v$(COMPONENT_VERSION).tar.gz
-COMPONENT_ARCHIVE_HASH=	sha256:43457ffcc68e85f4b3784665af250cbd6c710944257313abbe6500cd8f125fd5
+COMPONENT_ARCHIVE_HASH=	sha256:cb406f503e82d4b83aea07fc25c9754128c005a0439ef2af96686b9ed9288690
 
-include $(WS_MAKE_RULES)/prep.mk
-include $(WS_MAKE_RULES)/configure.mk
-include $(WS_MAKE_RULES)/ips.mk
+include $(WS_MAKE_RULES)/common.mk
 
 COMPONENT_POST_UNPACK_ACTION += ( chmod +x $(@D)/configure  $(@D)/src/auto/configure $(@D)/src/configure $(@D)/src/mkinstalldirs ; \
 				  find $(@D) -name \*.sh  -exec chmod +x '{}' ';' ; rm $(@D)/src/po/{ko.po,zh_CN.po} ; )
@@ -113,7 +112,7 @@ install:	$(INSTALL_64) $(BUILD_DIR)/license
 #  A lot of tests fail with 'Cannot create directory'
 test:		$(TEST_64)
 
-REQUIRED_PACKAGES += $(GXX_RUNTIME_PKG)
+REQUIRED_PACKAGES += $(GCC_RUNTIME_PKG)
 REQUIRED_PACKAGES += runtime/perl-524
 # Auto-generated dependencies
 REQUIRED_PACKAGES += library/desktop/cairo
@@ -131,3 +130,5 @@ REQUIRED_PACKAGES += x11/library/libice
 REQUIRED_PACKAGES += x11/library/libsm
 REQUIRED_PACKAGES += x11/library/libx11
 REQUIRED_PACKAGES += x11/library/toolkit/libxt
+# Bogus dependency due to libssp
+REQUIRED_PACKAGES += $(GXX_RUNTIME_PKG)
